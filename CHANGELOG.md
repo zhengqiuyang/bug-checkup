@@ -41,3 +41,10 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
 - Probes checked in for headroom: `factor_values` round-trip, `cross_turn_dedup` prefix
   monotonicity and accuracy, `thinking_compactor` keep-last/drop/sticky-floor/determinism/
   fail-open. All PASS; no finding.
+## [0.1.6] - 2026-11-15
+
+- Probe checked in for `config_compressor` (claim c-0130): elision must fail closed when the CCR
+  store write fails, an emitted elision must be recoverable from the stored original, and
+  data-looking comment lines must never be dropped silently. PASS (1 elision case exercised).
+- Probe requires the tier to be exercised, otherwise INCONCLUSIVE: a safety probe that never
+  reaches the risky branch proves nothing.

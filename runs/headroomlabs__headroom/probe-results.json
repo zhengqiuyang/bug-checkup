@@ -3,6 +3,13 @@
   "cwd": "D:\\projects\\headroom",
   "results": [
     {
+      "probe": "probe_config_compressor_safety.py",
+      "claim": "c-0130",
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: store-failure blocks elision; 1 elision case(s) recoverable; data-like comment lines never dropped"
+    },
+    {
       "probe": "probe_cross_turn_dedup_accuracy.py",
       "claim": null,
       "exit_code": 0,
