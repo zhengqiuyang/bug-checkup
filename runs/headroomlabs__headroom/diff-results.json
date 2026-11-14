@@ -1,11 +1,11 @@
 {
-  "scenario": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\scenario_smart_crusher.py",
-  "inputs": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\inputs.jsonl",
+  "scenario": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\scenario_forwarded_policy.py",
+  "inputs": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\inputs_forwarded.jsonl",
   "old_python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
   "new_python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
   "lines": {
-    "old": 17,
-    "new": 17
+    "old": 18,
+    "new": 18
   },
   "different": 0,
   "differences": []
