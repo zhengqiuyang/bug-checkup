@@ -56,3 +56,15 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
   rule, including the release-date trap. PASS.
 
 Seven probes on headroom, zero findings — the repo is unusually well defended on these contracts.
+
+## [0.2.0] - 2026-11-15
+
+- `run.py diff`: differential runner. A scenario script reads JSONL on stdin and writes one JSONL
+  result per input on stdout; the runner executes it under two environments and records where the
+  outputs differ. Language-agnostic by protocol; per-environment variables supported
+  (`--old-env` / `--new-env`).
+- `run.py new-probe`: probe scaffolding from per-ecosystem templates, carrying the exit-code
+  contract and the self-check hook.
+- `ECOSYSTEMS.md`: per-ecosystem methods (claim extraction, probe scaffold, property library) and
+  the compiler boundary — a wheel and a source checkout can share one compiled binary, so a
+  zero-diff result must be justified by checking which code each environment actually loads.

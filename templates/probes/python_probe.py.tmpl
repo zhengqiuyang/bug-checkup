@@ -1,0 +1,48 @@
+"""Probe for {{claim}}: {{description}}
+
+Family: {{family}}. Contract under test, and the smallest input that would falsify it.
+
+Standalone script (no test framework), so the probe runs with the repository's own
+interpreter and nothing else:
+
+    python {{filename}}
+
+Exit codes: 0 PASS, 1 FAIL, 2 INCONCLUSIVE, 3 CHECKER BUG.
+"""
+
+from __future__ import annotations
+
+CLAIM = "{{claim}}"  # bug-checkup claim id
+
+
+def check(failures: list[str]) -> None:
+    # TODO: build the smallest input that falsifies the claim, call the code under test,
+    # and append a message to `failures` when the observed behavior contradicts the claim.
+    raise NotImplementedError("implement the check for {{claim}}")
+
+
+def self_check() -> list[str]:
+    """Validate the checker before judging the code (a broken checker invents findings)."""
+    problems: list[str] = []
+    # TODO: prove the checker recognises a known-good and a known-bad input.
+    return problems
+
+
+def main() -> int:
+    problems = self_check()
+    if problems:
+        print("CHECKER BUG: " + "; ".join(problems))
+        return 3
+    failures: list[str] = []
+    check(failures)
+    if failures:
+        print(f"FAIL ({len(failures)} issue(s))")
+        for failure in failures:
+            print(" -", failure)
+        return 1
+    print("PASS: {{family}} holds for the generated cases")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
