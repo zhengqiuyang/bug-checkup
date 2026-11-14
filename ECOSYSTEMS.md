@@ -42,3 +42,11 @@ node -e "console.log(require.resolve('pkg'))"
 
 If both resolve to the same compiled artifact, build the candidate revision (or run the scenario in
 CI where it is built) before drawing a conclusion.
+
+## Baseline note (headroom, 2026-11-15)
+
+`diff-results.json` is the clean run (no canary). It records **0 differences**, and that number is
+*not* evidence that the two trees behave identically: the headroom logic under test lives in the
+compiled `headroom._core` binary, and both environments load the same 0.44.0 build (the source
+checkout has that wheel's `.pyd`). The Python layer differs only in tests. See `ECOSYSTEMS.md`,
+"the compiler boundary".
