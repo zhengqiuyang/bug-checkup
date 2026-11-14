@@ -1,8 +1,6 @@
-callsites: flag options no caller ever passes
+collide: artifact + merged-check + require-clear gate
 
-A real PR stalled for three review rounds because it added an `at_eof` option,
-covered it in focused tests, and never enabled it in a production caller. The
-capability scans definitions and call sites with AST and reports optional or
-keyword-only parameters that no call site passes.
-
-Fixture check flags the unwired option; headroom's parser shows 4 call sites.
+The check is now a gate, not a checklist item: it writes collision-results.json,
+searches merged PRs as well (the fix may already be in), and --require-clear exits 1
+when anything matches. Re-run it immediately before opening a PR; the discovery-time
+run only informs the plan.

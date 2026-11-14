@@ -565,64 +565,84 @@ def _gh_json(*args: str) -> Any:
 def cmd_collide(args: argparse.Namespace) -> int:
     """Check whether the bug is already being worked on before writing any code.
 
-    Three independent checks, because each one misses cases the others catch:
-    an issue's timeline cross-references (a linked PR), a keyword search over open PRs
-    (a PR that never mentions the issue number), and open PRs touching the same files.
+    Four independent signals, because each one misses cases the others catch:
+    an issue's timeline cross-references (a linked PR), a keyword search over **open** PRs
+    (a PR that never mentions the issue number), a filename search over open PRs, and a
+    keyword/filename search over **merged** PRs (the fix may already be in).
+
+    Writes a machine-readable artifact and, with ``--require-clear``, exits non-zero unless the
+    verdict is CLEAR -- so the check can gate opening a PR instead of living in a checklist.
     """
     repo = args.repo
     verdict = "CLEAR"
-    findings: list[str] = []
+    findings: list[dict] = []
+
+    def add(kind: str, number: int, title: str, url: str) -> None:
+        findings.append({"kind": kind, "number": number, "title": title, "url": url})
 
     if args.issue:
         timeline = _gh_json(
             "api", "-H", "Accept: application/vnd.github+json",
             f"repos/{repo}/issues/{args.issue}/timeline?per_page=100",
         ) or []
-        linked = [
-            event["source"]["issue"]
-            for event in timeline
-            if isinstance(event, dict) and event.get("event") == "cross-referenced"
-        ]
-        open_linked = [item for item in linked if item.get("state") == "open"]
-        for item in open_linked:
-            findings.append(f"issue #{args.issue} already linked to open PR #{item['number']}: {item['title']}")
-        if open_linked:
+        for event in timeline:
+            if not isinstance(event, dict) or event.get("event") != "cross-referenced":
+                continue
+            item = event.get("source", {}).get("issue") or {}
+            if item.get("state") == "open":
+                add("linked-open-pr", item.get("number", 0), item.get("title", ""), item.get("html_url", ""))
+        if any(f["kind"] == "linked-open-pr" for f in findings):
             verdict = "BLOCKED"
 
+    queries: list[tuple[str, str]] = []
     for keyword in args.keyword or []:
-        result = _gh_json(
-            "api",
-            "search/issues?q="
-            + __import__("urllib.parse", fromlist=["quote"]).quote(
-                f"repo:{repo} is:pr is:open {keyword}"
-            )
-            + "&per_page=20",
-        ) or {}
-        for item in result.get("items", []):
-            findings.append(f"open PR matches {keyword!r}: #{item['number']} {item['title']}")
-            verdict = "BLOCKED"
-
+        queries.append(("keyword", keyword))
     for filename in args.file or []:
-        name = Path(filename).name
-        result = _gh_json(
-            "api",
-            "search/issues?q="
-            + __import__("urllib.parse", fromlist=["quote"]).quote(f"repo:{repo} is:pr is:open {name}")
-            + "&per_page=20",
-        ) or {}
-        for item in result.get("items", []):
-            findings.append(f"open PR mentions file {name}: #{item['number']} {item['title']}")
-            verdict = "BLOCKED"
+        queries.append(("file", Path(filename).name))
 
-    unique = sorted(dict.fromkeys(findings))
+    quote = __import__("urllib.parse", fromlist=["quote"]).quote
+    for kind, value in queries:
+        for state, label in ((("is:open"), "open"), (("is:merged"), "merged")):
+            result = _gh_json(
+                "api",
+                "search/issues?q=" + quote(f"repo:{repo} is:pr {state} {value}") + "&per_page=20",
+            ) or {}
+            for item in result.get("items", []):
+                add(f"{label}-pr", item["number"], item["title"], item.get("html_url", ""))
+                if state == "is:open":
+                    verdict = "BLOCKED"
+
+    unique = {(f["kind"], f["number"]): f for f in findings}
+    findings = sorted(unique.values(), key=lambda f: (f["kind"], f["number"]))
+    has_merged = any(f["kind"] == "merged-pr" for f in findings)
+
+    record = {
+        "repo": repo,
+        "issue": args.issue,
+        "keywords": args.keyword or [],
+        "files": args.file or [],
+        "verdict": verdict,
+        "merged_candidates": has_merged,
+        "findings": findings,
+    }
+    out_dir = run_dir(args.name or repo.replace("/", "__"))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    artifact = out_dir / "collision-results.json"
+    artifact.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+
     print(f"verdict: {verdict}")
-    for finding in unique:
-        print(" -", finding)
-    if not unique:
-        print(" - no linked, matching, or file-touching open PRs found")
+    for finding in findings:
+        print(f" - {finding['kind']}: #{finding['number']} {finding['title']}")
+    if not findings:
+        print(" - no linked, matching, or file-touching PRs found (open or merged)")
+    if has_merged:
+        print(" ! merged PRs matched: confirm whether the fix is already in main before implementing")
+    print(f"artifact: {artifact}")
     print("Reminder: a PR that never mentions the issue number is only found by keyword/file search.")
-    return 0
 
+    if args.require_clear and (verdict != "CLEAR" or has_merged):
+        return 1
+    return 0
 
 def cmd_callsites(args: argparse.Namespace) -> int:
     """Report every production call site of a function and the options it never passes.
@@ -778,8 +798,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_col = sub.add_parser("collide", help="check linked/keyword/file collisions before writing code")
     p_col.add_argument("repo", help="owner/name")
     p_col.add_argument("--issue", type=int, help="issue number to follow cross-references from")
-    p_col.add_argument("--keyword", action="append", help="keyword to search open PRs for")
-    p_col.add_argument("--file", action="append", help="file whose name is searched in open PRs")
+    p_col.add_argument("--keyword", action="append", help="keyword to search PRs for (open and merged)")
+    p_col.add_argument("--file", action="append", help="file name searched in PRs (open and merged)")
+    p_col.add_argument("--name", help="run directory for collision-results.json")
+    p_col.add_argument("--require-clear", action="store_true", help="exit 1 unless the verdict is CLEAR")
     p_col.set_defaults(func=cmd_collide)
 
     p_call = sub.add_parser("callsites", help="list call sites and options no caller ever passes")

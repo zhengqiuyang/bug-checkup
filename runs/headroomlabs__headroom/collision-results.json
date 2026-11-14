@@ -1,0 +1,44 @@
+{
+  "repo": "headroomlabs-ai/headroom",
+  "issue": 4252,
+  "keywords": [
+    "CR-only SSE"
+  ],
+  "files": [
+    "sse_byte_buffer_policy.py"
+  ],
+  "verdict": "BLOCKED",
+  "merged_candidates": true,
+  "findings": [
+    {
+      "kind": "merged-pr",
+      "number": 1979,
+      "title": "Extract SSE byte buffer policy",
+      "url": "https://github.com/headroomlabs-ai/headroom/pull/1979"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 4298,
+      "title": "fix(proxy): count output tokens from CRLF-framed SSE streams too",
+      "url": "https://github.com/headroomlabs-ai/headroom/pull/4298"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 4306,
+      "title": "fix(proxy): strip only one leading space from SSE field values",
+      "url": "https://github.com/headroomlabs-ai/headroom/pull/4306"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 4337,
+      "title": "fix(proxy): preserve Unicode separators in SSE JSON",
+      "url": "https://github.com/headroomlabs-ai/headroom/pull/4337"
+    },
+    {
+      "kind": "open-pr",
+      "number": 4307,
+      "title": "fix(proxy): recognise mixed and CR-only SSE event terminators",
+      "url": "https://github.com/headroomlabs-ai/headroom/pull/4307"
+    }
+  ]
+}
