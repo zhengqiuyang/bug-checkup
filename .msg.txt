@@ -1,6 +1,8 @@
-collide: artifact + merged-check + require-clear gate
+probes: memory-tool stream integration and continuation rounds
 
-The check is now a gate, not a checklist item: it writes collision-results.json,
-searches merged PRs as well (the fix may already be in), and --require-clear exits 1
-when anything matches. Re-run it immediately before opening a PR; the discovery-time
-run only informs the plan.
+MemoryToolStreamFilter sits between the upstream SSE stream and the client. Ten
+assertions now cover it end to end: hidden blocks, contiguous indices, assembled
+input, end_turn for hidden-only tool rounds, bytewise parity, overflow safety,
+hold/release, continuation offsets, usage aggregation and passthrough.
+
+All PASS. context_guard.py is excluded: open PR #4307 already touches it.

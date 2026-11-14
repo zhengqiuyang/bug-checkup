@@ -52,6 +52,20 @@
       "output": "PASS: 9 fixed + 60 random cases preserved the decoded data (61 blocks actually rewritten)"
     },
     {
+      "probe": "probe_memory_tool_stream_continuation.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: two hidden blocks, inline input, continuation indices, usage aggregation, passthrough"
+    },
+    {
+      "probe": "probe_memory_tool_stream_integration.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: hidden blocks, contiguous indices, assembled input, end_turn, bytewise parity, overflow, hold/release"
+    },
+    {
       "probe": "probe_thinking_compactor_semantics.py",
       "claim": "c-0086",
       "exit_code": 0,
