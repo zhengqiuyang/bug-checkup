@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "candidates",
+  "description": "Phase 3: shrunk probe failures and their classification.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["claim_id", "verdict", "probe", "shrunk_input", "observed", "expected"],
+    "properties": {
+      "claim_id": { "type": "string" },
+      "verdict": {
+        "enum": ["confirmed", "known", "not_a_bug", "needs_validation"]
+      },
+      "probe": { "type": "string", "description": "probe file under probes/" },
+      "shrunk_input": { "type": "string", "description": "smallest input that still fails" },
+      "observed": { "type": "string" },
+      "expected": { "type": "string" },
+      "known_link": { "type": ["string", "null"], "description": "issue/PR/doc line for verdict=known" },
+      "reason": { "type": "string", "description": "why this verdict, for not_a_bug / needs_validation" }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "claims",
+  "description": "Phase 1: contracts a codebase states about itself.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "kind", "tier", "text", "source", "line", "visibility", "probe"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^c-[0-9]{4}$" },
+      "kind": {
+        "enum": [
+          "roundtrip",
+          "idempotence",
+          "determinism",
+          "preservation",
+          "exclusivity",
+          "concurrency",
+          "bounds"
+        ]
+      },
+      "tier": { "enum": ["A", "B"] },
+      "text": { "type": "string", "description": "the sentence that states the contract" },
+      "source": { "type": "string" },
+      "line": { "type": "integer", "minimum": 1 },
+      "symbol": { "type": ["string", "null"], "description": "function or class the claim belongs to" },
+      "visibility": { "enum": ["public", "module", "docs", "comment"] },
+      "probe": { "type": "string", "description": "probe id that would falsify the claim" }
+    }
+  }
+}

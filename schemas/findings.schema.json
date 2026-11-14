@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "findings",
+  "description": "Phase 4: confirmed candidates traced to a deciding line.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "title", "claim_id", "severity", "impact", "root_cause"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^f-[0-9]{4}$" },
+      "title": { "type": "string" },
+      "claim_id": { "type": "string" },
+      "severity": { "enum": ["critical", "high", "medium", "low"] },
+      "impact": {
+        "type": "string",
+        "description": "user-visible consequence: silent data loss, wrong type, dropped rows, lost compression, hang"
+      },
+      "root_cause": {
+        "type": "object",
+        "required": ["source", "line", "explanation"],
+        "properties": {
+          "source": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 },
+          "call_chain": { "type": "array", "items": { "type": "string" } },
+          "explanation": { "type": "string" }
+        }
+      },
+      "fix": {
+        "type": "object",
+        "properties": {
+          "status": { "enum": ["none", "drafted", "verified", "merged"] },
+          "branch": { "type": "string" },
+          "commit": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "verification",
+  "description": "Phase 5: red/green evidence. Commands and real output, never paraphrased.",
+  "type": "object",
+  "required": ["run", "red", "green"],
+  "properties": {
+    "run": { "type": "string" },
+    "red": { "$ref": "#/$defs/command_result", "description": "the new test on the unpatched tree" },
+    "green": { "$ref": "#/$defs/command_result", "description": "the same test with the patch" },
+    "suite": { "$ref": "#/$defs/command_result", "description": "repo tests for the touched area" },
+    "lint": { "$ref": "#/$defs/command_result" },
+    "not_tested": { "type": "string", "description": "honest list of what this run did not cover" }
+  },
+  "$defs": {
+    "command_result": {
+      "type": "object",
+      "required": ["command", "exit_code", "output"],
+      "properties": {
+        "command": { "type": "string" },
+        "exit_code": { "type": "integer" },
+        "output": { "type": "string" }
+      }
+    }
+  }
+}

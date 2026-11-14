@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "gate",
+  "description": "Phase 0 target gate for a repository we do not maintain.",
+  "type": "object",
+  "required": ["repo", "verdict", "reason", "checks"],
+  "properties": {
+    "repo": { "type": "string" },
+    "verdict": { "enum": ["go", "no-go"] },
+    "reason": { "type": "string" },
+    "checks": {
+      "type": "object",
+      "required": ["pr_policy", "first_timer_merges", "fork_ci", "open_prs", "dedupe"],
+      "properties": {
+        "pr_policy": {
+          "type": "object",
+          "required": ["verdict", "evidence"],
+          "properties": {
+            "verdict": {
+              "enum": [
+                "open",
+                "approval-required",
+                "assignment-required",
+                "collaborators-only",
+                "unknown"
+              ]
+            },
+            "evidence": { "type": "string", "description": "file:line or quote that decides it" }
+          }
+        },
+        "first_timer_merges": {
+          "type": "object",
+          "required": ["merged_none", "closed_sampled"],
+          "properties": {
+            "merged_none": { "type": "integer" },
+            "closed_sampled": { "type": "integer" }
+          }
+        },
+        "fork_ci": {
+          "type": "object",
+          "required": ["external_pr_checks", "action_required"],
+          "properties": {
+            "external_pr_checks": { "type": "integer" },
+            "action_required": { "type": "integer" }
+          }
+        },
+        "open_prs": { "type": "integer" },
+        "dedupe": {
+          "type": "object",
+          "required": ["open_issue_prs"],
+          "properties": {
+            "open_issue_prs": { "type": "integer" },
+            "note": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
