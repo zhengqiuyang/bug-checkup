@@ -3,6 +3,13 @@
   "cwd": "D:\\projects\\headroom",
   "results": [
     {
+      "probe": "auto_roundtrip_lossless_compaction.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 2 pair(s), 2 round-trip(s) restored the input"
+    },
+    {
       "probe": "probe_billing_gate_models.py",
       "claim": "c-0060",
       "exit_code": 0,

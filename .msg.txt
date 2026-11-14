@@ -1,8 +1,9 @@
-examples: run documentation examples as contracts, with noise classification
+autoprobe: detect inverse function pairs and generate round-trip probes
 
-Fenced Python blocks in Markdown are promises: they should run. The runner extracts them,
-executes each with the repo interpreter, and classifies the outcome so only real problems
-surface — PASS, FRAGMENT (NameError: snippet needs surrounding code), NEEDS_ENV (network,
-API key, missing SDK), FAIL (contract mismatch).
+The strongest pattern from this session's mining (decode(encode(x)) == x) is now
+automated for the common naming families. The generated probe uses an input corpus
+that makes compression engage, and reports INCONCLUSIVE when no pair changes any
+input, so a vacuous pass is impossible.
 
-First run on headroom's README: 4 blocks, 0 FAIL.
+First run: headroom transforms -> collapse_runs/expand_runs and
+fold_repeated_blocks/unfold_repeated_blocks, both round-trip. PASS.

@@ -77,3 +77,13 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
   PASS, FRAGMENT (snippet needs surrounding code — NameError), NEEDS_ENV (network / API key /
   missing SDK), FAIL (a real contract problem). Only FAIL is a finding.
 - First run on headroom's README: 4 blocks -> 1 FRAGMENT, 2 SKIP, 1 NEEDS_ENV, **0 FAIL**.
+
+
+## [0.4.0] - 2026-11-15
+
+- `run.py autoprobe`: detects inverse function pairs in a module (`encode`/`decode`,
+  `fold`/`unfold`, `collapse`/`expand`, `serialize`/`deserialize`, `to_dict`/`from_dict`, …) and
+  scaffolds a round-trip probe for each pair. Generated inputs are chosen so compression engages;
+  a probe that never transforms an input reports INCONCLUSIVE.
+- First run on headroom's transforms: 2 pairs (`collapse_runs`/`expand_runs`,
+  `fold_repeated_blocks`/`unfold_repeated_blocks`) -> PASS.

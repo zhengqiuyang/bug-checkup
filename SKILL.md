@@ -123,3 +123,13 @@ the probe.
 
 A failure caused by out-of-contract input is `not_a_bug`, not a finding: provider-native messages are
 a list of dicts, so `[None]` raising AttributeError is not a bug in the code under audit.
+
+## Auto-generated round-trip probes
+
+`python run.py autoprobe <run> --path <package dir> --import-root <repo>` scans for inverse
+function pairs in one module — `encode`/`decode`, `fold`/`unfold`, `collapse`/`expand`,
+`serialize`/`deserialize`, `to_dict`/`from_dict`, and their siblings — where both functions take a
+single required argument. It scaffolds a probe that calls f then g and asserts the original comes
+back, using an input corpus built to make compression engage (long runs, repeated stanzas, arrays of
+repeated items, unicode, empty and padded text). A probe that never changes an input is
+INCONCLUSIVE, not PASS.
