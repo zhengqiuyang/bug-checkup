@@ -87,3 +87,16 @@ Patch on a branch. Record, verbatim:
 - No probe on internals or monkeypatched state.
 - No PR where the repo forbids them; no PR on an issue someone is already implementing.
 - State what you did not test. Credibility comes from the caveat, not from omitting it.
+
+## Probe format (learned the hard way)
+
+A probe is a **standalone script**, not a pytest module:
+
+- runs with the repository's own interpreter and nothing else;
+- exits `0` PASS, `1` FAIL, `2` INCONCLUSIVE;
+- prints one line: `PASS: <n> cases (<m> actually rewritten)`, or the failing input;
+- proves it exercised the code — a probe that never changed anything is INCONCLUSIVE, not PASS.
+
+pytest is optional for the repository under audit, but a probe must not depend on a pytest plugin:
+in one audit, `hypothesis`'s pytest plugin deadlocked the whole run on Windows, and the probe
+looked like a hang rather than a result.

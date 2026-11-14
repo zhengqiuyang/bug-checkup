@@ -14,3 +14,9 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
 
 ### Implementation order from here
 `probe` → `verify` → `gate` → `report`, driven by real audits rather than speculative features.
+## [0.1.1] - 2026-11-15
+
+- Probe format fixed: standalone scripts (exit 0/1/2), no pytest-plugin dependency; a probe must
+  prove it exercised the code or report INCONCLUSIVE.
+- First real probe checked in: actor_values round-trip (claim c-0125) — PASS over 9 fixed + 60
+  random tables, 61 blocks actually rewritten.
