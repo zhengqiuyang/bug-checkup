@@ -3,6 +3,20 @@
   "cwd": "D:\\projects\\headroom",
   "results": [
     {
+      "probe": "probe_billing_gate_models.py",
+      "claim": "c-0060",
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 16 model ids classified as the documented rule says"
+    },
+    {
+      "probe": "probe_compression_store_concurrency.py",
+      "claim": "c-0008",
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 8x40 concurrent stores stayed within 20 entries, no exceptions, duplicate re-store kept all 20 live entries"
+    },
+    {
       "probe": "probe_config_compressor_safety.py",
       "claim": "c-0130",
       "exit_code": 0,

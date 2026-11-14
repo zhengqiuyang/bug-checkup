@@ -48,3 +48,11 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
   data-looking comment lines must never be dropped silently. PASS (1 elision case exercised).
 - Probe requires the tier to be exercised, otherwise INCONCLUSIVE: a safety probe that never
   reaches the risky branch proves nothing.
+## [0.1.7] - 2026-11-15
+
+- Concurrency probe for `CompressionStore`: 8x40 concurrent stores stay within `max_entries`, no
+  exceptions, duplicate re-store keeps every live entry. PASS.
+- Money-gate probe for `bills_prior_thinking`: 16 model-id spellings classified per the documented
+  rule, including the release-date trap. PASS.
+
+Seven probes on headroom, zero findings — the repo is unusually well defended on these contracts.
