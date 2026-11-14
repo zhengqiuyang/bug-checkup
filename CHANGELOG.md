@@ -24,3 +24,8 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
 
 - Renamed to `bug-checkup`: the tool is a checkup for a repository — claims are the checklist,
   probes are the tests, the report is the checkup result.
+## [0.1.3] - 2026-11-15
+
+- Probes must self-validate their checker (exit 3 = CHECKER BUG) before reporting a verdict.
+- Two more probes for headroom `cross_turn_dedup` (no test references in the repo): prefix
+  monotonicity (38 scenarios, 72 folds) and accuracy (45 scenarios, 92 folds) — both PASS.

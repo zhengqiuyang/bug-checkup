@@ -100,3 +100,10 @@ A probe is a **standalone script**, not a pytest module:
 pytest is optional for the repository under audit, but a probe must not depend on a pytest plugin:
 in one audit, `hypothesis`'s pytest plugin deadlocked the whole run on Windows, and the probe
 looked like a hang rather than a result.
+## Probe self-validation
+
+A probe contains a checker, and a broken checker reports false findings in both directions (we
+shipped one: a pointer regex that missed the delta form, and a span comparison against the whole
+block instead of a sub-run). Every probe therefore validates its own checker first — recognises a
+real pointer, rejects an absent span — and exits `3` (CHECKER BUG) before evaluating the code.
+"PASS" from an unvalidated checker means nothing.
