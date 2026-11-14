@@ -553,6 +553,76 @@ def cmd_autoprobe(args: argparse.Namespace) -> int:
         print("next: `python run.py probe <run> --python <repo interpreter> --cwd <repo>`")
     return 0
 
+
+def _gh_json(*args: str) -> Any:
+    out = subprocess.run(["gh", *args], capture_output=True, text=True, encoding="utf-8").stdout
+    try:
+        return json.loads(out)
+    except json.JSONDecodeError:
+        return None
+
+
+def cmd_collide(args: argparse.Namespace) -> int:
+    """Check whether the bug is already being worked on before writing any code.
+
+    Three independent checks, because each one misses cases the others catch:
+    an issue's timeline cross-references (a linked PR), a keyword search over open PRs
+    (a PR that never mentions the issue number), and open PRs touching the same files.
+    """
+    repo = args.repo
+    verdict = "CLEAR"
+    findings: list[str] = []
+
+    if args.issue:
+        timeline = _gh_json(
+            "api", "-H", "Accept: application/vnd.github+json",
+            f"repos/{repo}/issues/{args.issue}/timeline?per_page=100",
+        ) or []
+        linked = [
+            event["source"]["issue"]
+            for event in timeline
+            if isinstance(event, dict) and event.get("event") == "cross-referenced"
+        ]
+        open_linked = [item for item in linked if item.get("state") == "open"]
+        for item in open_linked:
+            findings.append(f"issue #{args.issue} already linked to open PR #{item['number']}: {item['title']}")
+        if open_linked:
+            verdict = "BLOCKED"
+
+    for keyword in args.keyword or []:
+        result = _gh_json(
+            "api",
+            "search/issues?q="
+            + __import__("urllib.parse", fromlist=["quote"]).quote(
+                f"repo:{repo} is:pr is:open {keyword}"
+            )
+            + "&per_page=20",
+        ) or {}
+        for item in result.get("items", []):
+            findings.append(f"open PR matches {keyword!r}: #{item['number']} {item['title']}")
+            verdict = "BLOCKED"
+
+    for filename in args.file or []:
+        name = Path(filename).name
+        result = _gh_json(
+            "api",
+            "search/issues?q="
+            + __import__("urllib.parse", fromlist=["quote"]).quote(f"repo:{repo} is:pr is:open {name}")
+            + "&per_page=20",
+        ) or {}
+        for item in result.get("items", []):
+            findings.append(f"open PR mentions file {name}: #{item['number']} {item['title']}")
+            verdict = "BLOCKED"
+
+    unique = sorted(dict.fromkeys(findings))
+    print(f"verdict: {verdict}")
+    for finding in unique:
+        print(" -", finding)
+    if not unique:
+        print(" - no linked, matching, or file-touching open PRs found")
+    print("Reminder: a PR that never mentions the issue number is only found by keyword/file search.")
+    return 0
+
 def cmd_pending(phase: str) -> int:
     print(f"phase '{phase}' is not implemented in v0.1.")
     print(f"planned: {PENDING[phase]}")
@@ -614,6 +684,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_diff.add_argument("--new-env", action="append", metavar="KEY=VALUE")
     p_diff.add_argument("--max-diffs", type=int, default=50)
     p_diff.set_defaults(func=cmd_diff)
+
+    p_col = sub.add_parser("collide", help="check linked/keyword/file collisions before writing code")
+    p_col.add_argument("repo", help="owner/name")
+    p_col.add_argument("--issue", type=int, help="issue number to follow cross-references from")
+    p_col.add_argument("--keyword", action="append", help="keyword to search open PRs for")
+    p_col.add_argument("--file", action="append", help="file whose name is searched in open PRs")
+    p_col.set_defaults(func=cmd_collide)
 
     p_auto = sub.add_parser("autoprobe", help="scaffold round-trip probes for inverse function pairs")
     p_auto.add_argument("name")

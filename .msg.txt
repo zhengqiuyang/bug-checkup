@@ -1,9 +1,8 @@
-autoprobe: detect inverse function pairs and generate round-trip probes
+collide: check for in-flight work before writing code
 
-The strongest pattern from this session's mining (decode(encode(x)) == x) is now
-automated for the common naming families. The generated probe uses an input corpus
-that makes compression engage, and reports INCONCLUSIVE when no pair changes any
-input, so a vacuous pass is impossible.
+Issue #4252 looked unclaimed when searched by number, but an open PR (#4307) had
+implemented the same SSE terminator fix for weeks and never mentioned the issue.
+`run.py collide` now checks three independent signals: issue timeline cross-references,
+open PRs matching keywords, and open PRs touching the same file. Any hit is BLOCKED.
 
-First run: headroom transforms -> collapse_runs/expand_runs and
-fold_repeated_blocks/unfold_repeated_blocks, both round-trip. PASS.
+Validated on that case: verdict BLOCKED, both by keyword and by filename.
