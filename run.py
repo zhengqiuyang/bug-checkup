@@ -270,6 +270,146 @@ def cmd_new_probe(args: argparse.Namespace) -> int:
     print("next: fill in check()/self_check(), then `python run.py probe <run> ...`")
     return 0
 
+
+FENCE = re.compile(r"^\s*```(\w+)?\s*$", re.MULTILINE)
+EXAMPLE_LANGS = {"python", "python3", "py"}
+# Blocks that cannot run as-is, or need credentials/network: reported as SKIP, not FAIL.
+EXAMPLE_SKIP_MARKERS = (
+    ">>>",
+    "...",
+    "<your",
+    "your_api_key",
+    "YOUR_API_KEY",
+    "pip install",
+    "os.environ[\"OPENAI_API_KEY\"] = \"sk-",
+)
+
+
+def _fenced_blocks(text: str, language: str) -> list[tuple[int, str]]:
+    """(line number, code) for every fenced block whose tag matches ``language``."""
+    lines = text.splitlines()
+    blocks: list[tuple[int, str]] = []
+    start: int | None = None
+    tag: str | None = None
+    body: list[str] = []
+    for number, line in enumerate(lines, start=1):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            if start is None:
+                start, tag, body = number, stripped[3:].strip().lower(), []
+            else:
+                if tag in EXAMPLE_LANGS or (not tag and language in EXAMPLE_LANGS):
+                    blocks.append((start, "\n".join(body)))
+                start, tag, body = None, None, []
+            continue
+        if start is not None:
+            body.append(line)
+    return blocks
+
+
+
+EXAMPLE_ENV_MARKERS = (
+    "timeout after",
+    "ConnectionError",
+    "Connection refused",
+    "SSLError",
+    "ProxyError",
+    "No module named",
+    "ModuleNotFoundError",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "api_key",
+    "API key",
+)
+
+
+def _classify_example(exit_code: int, output: str) -> str:
+    """PASS / FRAGMENT (doc snippet, missing surrounding code) / NEEDS_ENV / FAIL.
+
+    Only FAIL is a contract problem worth investigating: a fragment is the docs' shape,
+    and a needs-env example proves nothing about the code.
+    """
+    if exit_code == 0:
+        return "PASS"
+    if "NameError" in output and "is not defined" in output:
+        return "FRAGMENT"
+    if any(marker in output for marker in EXAMPLE_ENV_MARKERS):
+        return "NEEDS_ENV"
+    return "FAIL"
+
+def cmd_examples(args: argparse.Namespace) -> int:
+    """Extract fenced examples from docs and execute them.
+
+    Documentation examples are implicit contracts. The runner is language-agnostic in
+    shape: an example is a file executed by a configured interpreter; only the fenced
+    block extraction is Markdown-specific.
+    """
+    path = run_dir(args.name)
+    examples_dir = path / "examples"
+    examples_dir.mkdir(parents=True, exist_ok=True)
+    target = Path(args.path).resolve()
+    if not target.exists():
+        print(f"{target} does not exist", file=sys.stderr)
+        return 2
+
+    files = [target] if target.is_file() else sorted(target.rglob("*.md"))
+    interpreter = args.python or sys.executable
+    cwd = Path(args.cwd).resolve() if args.cwd else path
+    results = []
+    index = 0
+    for doc in files:
+        text = doc.read_text(encoding="utf-8", errors="replace")
+        for line_number, code in _fenced_blocks(text, args.lang):
+            index += 1
+            name = f"example_{index:03d}.py"
+            script = examples_dir / name
+            script.write_text(code + "\n", encoding="utf-8")
+            skip = any(marker in code for marker in EXAMPLE_SKIP_MARKERS) or (
+                "import " not in code and "from " not in code
+            )
+            if skip:
+                results.append(
+                    {"example": name, "doc": str(doc), "line": line_number, "verdict": "SKIP"}
+                )
+                continue
+            try:
+                completed = subprocess.run(
+                    [interpreter, str(script)],
+                    cwd=str(cwd),
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=args.timeout,
+                )
+                code_exit = completed.returncode
+                output = ((completed.stdout or "") + (completed.stderr or "")).strip()[-2000:]
+            except subprocess.TimeoutExpired:
+                code_exit, output = -1, f"timeout after {args.timeout}s"
+            results.append(
+                {
+                    "example": name,
+                    "doc": str(doc),
+                    "line": line_number,
+                    "verdict": _classify_example(code_exit, output),
+                    "exit_code": code_exit,
+                    "output": output,
+                }
+            )
+    (path / "examples-results.json").write_text(
+        json.dumps({"path": str(target), "interpreter": interpreter, "results": results}, indent=2)
+        + "\n",
+        encoding="utf-8",
+    )
+    counts: dict[str, int] = {}
+    for row in results:
+        counts[row["verdict"]] = counts.get(row["verdict"], 0) + 1
+    print(f"{index} example(s) -> {path / 'examples-results.json'}: {counts}")
+    for row in results:
+        if row["verdict"] == "FAIL":
+            print(f"  FAIL {row['example']} ({Path(row['doc']).name}:{row['line']})")
+    return 0
+
 def cmd_pending(phase: str) -> int:
     print(f"phase '{phase}' is not implemented in v0.1.")
     print(f"planned: {PENDING[phase]}")
@@ -331,6 +471,15 @@ def build_parser() -> argparse.ArgumentParser:
     p_diff.add_argument("--new-env", action="append", metavar="KEY=VALUE")
     p_diff.add_argument("--max-diffs", type=int, default=50)
     p_diff.set_defaults(func=cmd_diff)
+
+    p_ex = sub.add_parser("examples", help="run fenced documentation examples as contracts")
+    p_ex.add_argument("name")
+    p_ex.add_argument("--path", required=True, help="Markdown file or directory of .md files")
+    p_ex.add_argument("--lang", default="python")
+    p_ex.add_argument("--python", help="interpreter for the examples")
+    p_ex.add_argument("--cwd")
+    p_ex.add_argument("--timeout", type=int, default=120)
+    p_ex.set_defaults(func=cmd_examples)
 
     p_new = sub.add_parser("new-probe", help="scaffold a probe from a per-ecosystem template")
     p_new.add_argument("name")

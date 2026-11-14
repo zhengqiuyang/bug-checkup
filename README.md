@@ -55,6 +55,7 @@ never invent a different shape.
 | 1 claims | `claims.json` | **implemented** (`claim_scan.py`) |
 | 2 probe | `probes/`, `probe-results.json` | **implemented** (`run.py probe`, `run.py new-probe`) |
 | 3 diff | `diff-results.json` | **implemented** (`run.py diff`, two environments) |
+| 3 examples | `examples-results.json` | **implemented** (`run.py examples`) |
 | 3 shrink | `candidates.json` | interface frozen, implementation pending |
 | 4 trace | `findings.json` | interface frozen, implementation pending |
 | 5 verify | `verification.json` | interface frozen, implementation pending |

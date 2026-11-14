@@ -1,0 +1,34 @@
+{
+  "path": "D:\\projects\\headroom\\README.md",
+  "interpreter": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
+  "results": [
+    {
+      "example": "example_001.py",
+      "doc": "D:\\projects\\headroom\\README.md",
+      "line": 51,
+      "verdict": "FRAGMENT",
+      "exit_code": 1,
+      "output": "Traceback (most recent call last):\n  File \"D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\examples\\example_001.py\", line 3, in <module>\n    result = compress(messages, model=\"gpt-4o\")  # OpenAI or Anthropic message dicts\n                      ^^^^^^^^\nNameError: name 'messages' is not defined"
+    },
+    {
+      "example": "example_002.py",
+      "doc": "D:\\projects\\headroom\\README.md",
+      "line": 99,
+      "verdict": "SKIP"
+    },
+    {
+      "example": "example_003.py",
+      "doc": "D:\\projects\\headroom\\README.md",
+      "line": 150,
+      "verdict": "NEEDS_ENV",
+      "exit_code": -1,
+      "output": "timeout after 60s"
+    },
+    {
+      "example": "example_004.py",
+      "doc": "D:\\projects\\headroom\\README.md",
+      "line": 631,
+      "verdict": "SKIP"
+    }
+  ]
+}

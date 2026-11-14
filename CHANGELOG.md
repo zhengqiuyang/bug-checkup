@@ -68,3 +68,12 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
 - `ECOSYSTEMS.md`: per-ecosystem methods (claim extraction, probe scaffold, property library) and
   the compiler boundary — a wheel and a source checkout can share one compiled binary, so a
   zero-diff result must be justified by checking which code each environment actually loads.
+
+
+## [0.3.0] - 2026-11-15
+
+- `run.py examples`: documentation examples are implicit contracts. Fenced blocks are extracted
+  and executed with the repository's interpreter; verdicts are classified so the signal survives:
+  PASS, FRAGMENT (snippet needs surrounding code — NameError), NEEDS_ENV (network / API key /
+  missing SDK), FAIL (a real contract problem). Only FAIL is a finding.
+- First run on headroom's README: 4 blocks -> 1 FRAGMENT, 2 SKIP, 1 NEEDS_ENV, **0 FAIL**.

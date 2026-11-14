@@ -1,0 +1,8 @@
+examples: run documentation examples as contracts, with noise classification
+
+Fenced Python blocks in Markdown are promises: they should run. The runner extracts them,
+executes each with the repo interpreter, and classifies the outcome so only real problems
+surface — PASS, FRAGMENT (NameError: snippet needs surrounding code), NEEDS_ENV (network,
+API key, missing SDK), FAIL (contract mismatch).
+
+First run on headroom's README: 4 blocks, 0 FAIL.
