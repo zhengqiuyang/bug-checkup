@@ -25,6 +25,8 @@
       "line": { "type": "integer", "minimum": 1 },
       "symbol": { "type": ["string", "null"], "description": "function or class the claim belongs to" },
       "visibility": { "enum": ["public", "module", "docs", "comment"] },
+      "reachable": { "type": "boolean", "description": "some other module imports this one" },
+      "importers": { "type": "array", "items": { "type": "string" } },
       "probe": { "type": "string", "description": "probe id that would falsify the claim" }
     }
   }

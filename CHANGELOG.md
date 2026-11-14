@@ -29,3 +29,8 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
 - Probes must self-validate their checker (exit 3 = CHECKER BUG) before reporting a verdict.
 - Two more probes for headroom `cross_turn_dedup` (no test references in the repo): prefix
   monotonicity (38 scenarios, 72 folds) and accuracy (45 scenarios, 92 folds) — both PASS.
+## [0.1.4] - 2026-11-15
+
+- Claim scan records reachability and importers; dead-module claims are filtered by default
+  (`--include-unreachable` to keep them). Multi-line imports are parsed, which corrected a
+  false "dead code" call made by grep in the headroom audit.

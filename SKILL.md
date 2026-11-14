@@ -107,3 +107,10 @@ shipped one: a pointer regex that missed the delta form, and a span comparison a
 block instead of a sub-run). Every probe therefore validates its own checker first — recognises a
 real pointer, rejects an absent span — and exits `3` (CHECKER BUG) before evaluating the code.
 "PASS" from an unvalidated checker means nothing.
+## Reachability
+
+A claim in a module nothing imports is not a user-facing contract: it is dead code, and auditing it
+wastes a probe. `claim_scan` builds an import map and marks each claim `reachable` with its
+`importers`; unreachable claims are dropped unless `--include-unreachable` is passed. Multi-line
+imports count, because a lazy `from pkg.mod import (` block is a real caller even when a one-line
+grep misses it.

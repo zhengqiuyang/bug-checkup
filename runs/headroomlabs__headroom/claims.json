@@ -8,6 +8,11 @@
     "line": 98,
     "symbol": "ensure_ort_dylib_pinned",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "content_router.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -19,6 +24,17 @@
     "line": 391,
     "symbol": "seed_proxy_env_defaults",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "agent_savings.py",
+      "anthropic.py",
+      "compress.py",
+      "gemini.py",
+      "main.py",
+      "openai.py",
+      "server.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -30,6 +46,19 @@
     "line": 17,
     "symbol": "InMemoryBackend",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "direct_mem0.py",
+      "easy.py",
+      "evals.py",
+      "local.py",
+      "main.py",
+      "mem0.py",
+      "memory_handler.py",
+      "models.py",
+      "runner.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -41,6 +70,19 @@
     "line": 17,
     "symbol": "InMemoryBackend",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "direct_mem0.py",
+      "easy.py",
+      "evals.py",
+      "local.py",
+      "main.py",
+      "mem0.py",
+      "memory_handler.py",
+      "models.py",
+      "runner.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -52,6 +94,19 @@
     "line": 17,
     "symbol": "InMemoryBackend",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "direct_mem0.py",
+      "easy.py",
+      "evals.py",
+      "local.py",
+      "main.py",
+      "mem0.py",
+      "memory_handler.py",
+      "models.py",
+      "runner.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -63,6 +118,13 @@
     "line": 86,
     "symbol": "SQLiteBackend",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "compression_store.py",
+      "factory.py",
+      "memory.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -74,6 +136,13 @@
     "line": 340,
     "symbol": "content_hash",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "base.py",
+      "helpers.py",
+      "server.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -85,6 +154,31 @@
     "line": 222,
     "symbol": "CompressionStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "base.py",
+      "code_compressor.py",
+      "compression_feedback.py",
+      "config_compressor.py",
+      "content_router.py",
+      "context_tracker.py",
+      "kompress_compressor.py",
+      "marker_resolution.py",
+      "mcp_server.py",
+      "memory.py",
+      "openai.py",
+      "prefix_tracker.py",
+      "redis.py",
+      "redis_client.py",
+      "response_handler.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "streaming.py",
+      "tool_injection.py",
+      "universal.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -96,6 +190,31 @@
     "line": 222,
     "symbol": "CompressionStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "base.py",
+      "code_compressor.py",
+      "compression_feedback.py",
+      "config_compressor.py",
+      "content_router.py",
+      "context_tracker.py",
+      "kompress_compressor.py",
+      "marker_resolution.py",
+      "mcp_server.py",
+      "memory.py",
+      "openai.py",
+      "prefix_tracker.py",
+      "redis.py",
+      "redis_client.py",
+      "response_handler.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "streaming.py",
+      "tool_injection.py",
+      "universal.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -107,6 +226,16 @@
     "line": 963,
     "symbol": "normalize_message_cache_control",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "helpers.py",
+      "openai.py",
+      "server.py",
+      "session_engine.py",
+      "shared_sessions.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -118,6 +247,13 @@
     "line": 86,
     "symbol": "unregister",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "prometheus_metrics.py",
+      "redis.py",
+      "server.py",
+      "shared_sessions.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -129,6 +265,10 @@
     "line": 48,
     "symbol": "ResultStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -140,6 +280,12 @@
     "line": 86,
     "symbol": "BatchContextStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "batch_processor.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -151,6 +297,12 @@
     "line": 228,
     "symbol": "stats",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "batch_processor.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -162,6 +314,12 @@
     "line": 249,
     "symbol": "get_memory_stats",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "batch_processor.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -173,6 +331,12 @@
     "line": 526,
     "symbol": "check_claude_remote_control_gate",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "init.py",
+      "main.py",
+      "savings.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -184,6 +348,11 @@
     "line": 739,
     "symbol": "adversarial",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "main.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -195,6 +364,14 @@
     "line": 459,
     "symbol": "compress_spreadsheet",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "hermes.py",
+      "mcp_server.py",
+      "shared_context.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -206,6 +383,14 @@
     "line": 492,
     "symbol": "densify",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "hermes.py",
+      "mcp_server.py",
+      "shared_context.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -217,6 +402,14 @@
     "line": 492,
     "symbol": "densify",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "hermes.py",
+      "mcp_server.py",
+      "shared_context.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -228,6 +421,14 @@
     "line": 492,
     "symbol": "densify",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "hermes.py",
+      "mcp_server.py",
+      "shared_context.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -239,6 +440,14 @@
     "line": 492,
     "symbol": "densify",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "hermes.py",
+      "mcp_server.py",
+      "shared_context.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -250,6 +459,51 @@
     "line": 870,
     "symbol": "CCRConfig",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anchor_selector.py",
+      "anthropic.py",
+      "base.py",
+      "cache_aligner.py",
+      "client.py",
+      "code_compressor.py",
+      "compress.py",
+      "config.py",
+      "content_router.py",
+      "core.py",
+      "datasets.py",
+      "dynamic_detector.py",
+      "embedders.py",
+      "factory.py",
+      "harness.py",
+      "hooks.py",
+      "install.py",
+      "jsonl.py",
+      "kompress_compressor.py",
+      "langgraph.py",
+      "local.py",
+      "ml_models.py",
+      "models.py",
+      "openai.py",
+      "opencode.py",
+      "parser.py",
+      "persistent_metrics.py",
+      "pipeline.py",
+      "proxy.py",
+      "proxy_routes.py",
+      "read_lifecycle.py",
+      "read_maturation.py",
+      "runtime.py",
+      "semantic.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "trained_router.py",
+      "upstream_trust.py",
+      "wrap.py",
+      "wrapper.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -261,6 +515,51 @@
     "line": 870,
     "symbol": "CCRConfig",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anchor_selector.py",
+      "anthropic.py",
+      "base.py",
+      "cache_aligner.py",
+      "client.py",
+      "code_compressor.py",
+      "compress.py",
+      "config.py",
+      "content_router.py",
+      "core.py",
+      "datasets.py",
+      "dynamic_detector.py",
+      "embedders.py",
+      "factory.py",
+      "harness.py",
+      "hooks.py",
+      "install.py",
+      "jsonl.py",
+      "kompress_compressor.py",
+      "langgraph.py",
+      "local.py",
+      "ml_models.py",
+      "models.py",
+      "openai.py",
+      "opencode.py",
+      "parser.py",
+      "persistent_metrics.py",
+      "pipeline.py",
+      "proxy.py",
+      "proxy_routes.py",
+      "read_lifecycle.py",
+      "read_maturation.py",
+      "runtime.py",
+      "semantic.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "trained_router.py",
+      "upstream_trust.py",
+      "wrap.py",
+      "wrapper.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -272,6 +571,10 @@
     "line": 102,
     "symbol": "synthetic_carriers",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "evals.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -283,6 +586,10 @@
     "line": 310,
     "symbol": "run_adversarial_grid",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "evals.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -294,6 +601,10 @@
     "line": 263,
     "symbol": "generate_math_test_cases",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -305,6 +616,11 @@
     "line": 62,
     "symbol": "CompressionOnlyRunner",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "suite_runner.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -316,6 +632,63 @@
     "line": 72,
     "symbol": "ManagedMutation",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_shared.py",
+      "analyzer.py",
+      "base.py",
+      "bridge.py",
+      "cache.py",
+      "claude.py",
+      "client.py",
+      "codex.py",
+      "collector.py",
+      "content_router.py",
+      "core.py",
+      "direct_mem0.py",
+      "doctor.py",
+      "fixtures.py",
+      "fts5.py",
+      "gemini.py",
+      "grok.py",
+      "harness.py",
+      "hnsw.py",
+      "init.py",
+      "install.py",
+      "install_registry.py",
+      "kompress_compressor.py",
+      "local.py",
+      "loops.py",
+      "mem0.py",
+      "mem0_system_adapter.py",
+      "memory.py",
+      "model.py",
+      "opencode.py",
+      "outcome.py",
+      "planner.py",
+      "ports.py",
+      "providers.py",
+      "rate_limiter.py",
+      "request_logger.py",
+      "runner_v2.py",
+      "runtime.py",
+      "semantic_cache.py",
+      "server.py",
+      "session_tracking.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "sqlite_vector.py",
+      "state.py",
+      "supervisors.py",
+      "system.py",
+      "toin.py",
+      "tracker.py",
+      "traffic_learner.py",
+      "wrap.py",
+      "wrapper.py",
+      "writer.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -327,6 +700,15 @@
     "line": 95,
     "symbol": "total_tokens_saved",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -338,6 +720,15 @@
     "line": 101,
     "symbol": "metrics_history",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -349,6 +740,15 @@
     "line": 139,
     "symbol": "get_savings_summary",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -360,6 +760,15 @@
     "line": 208,
     "symbol": "alerts",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -371,6 +780,15 @@
     "line": 277,
     "symbol": "get_summary",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -382,6 +800,15 @@
     "line": 296,
     "symbol": "reset",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -393,6 +820,10 @@
     "line": 257,
     "symbol": "pipeline",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -404,6 +835,10 @@
     "line": 614,
     "symbol": "reset",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -415,6 +850,10 @@
     "line": 231,
     "symbol": "wrap_tools_with_headroom",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -426,6 +865,10 @@
     "line": 79,
     "symbol": "HeadroomToolWrapper",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -437,6 +880,10 @@
     "line": 213,
     "symbol": "wrap_tools_with_headroom",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -448,6 +895,15 @@
     "line": 157,
     "symbol": "crusher",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -459,6 +915,15 @@
     "line": 545,
     "symbol": "reset",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "bundle.py",
+      "compress.py",
+      "hooks.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -470,6 +935,10 @@
     "line": 129,
     "symbol": "pipeline",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -481,6 +950,10 @@
     "line": 498,
     "symbol": "reset",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -492,6 +965,40 @@
     "line": 325,
     "symbol": "WarnOnce",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "_debug_dump.py",
+      "_failure_logging.py",
+      "anthropic.py",
+      "base.py",
+      "bedrock.py",
+      "cohere.py",
+      "compression_batches.py",
+      "compression_store.py",
+      "content_router.py",
+      "cost.py",
+      "counterfactual.py",
+      "cross_turn_dedup.py",
+      "direct_mem0.py",
+      "extensions.py",
+      "kompress_compressor.py",
+      "lossless_compaction.py",
+      "mcp_server.py",
+      "mem0_system_adapter.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "registry.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tool_schema_savings_policy.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -503,6 +1010,40 @@
     "line": 325,
     "symbol": "WarnOnce",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "_debug_dump.py",
+      "_failure_logging.py",
+      "anthropic.py",
+      "base.py",
+      "bedrock.py",
+      "cohere.py",
+      "compression_batches.py",
+      "compression_store.py",
+      "content_router.py",
+      "cost.py",
+      "counterfactual.py",
+      "cross_turn_dedup.py",
+      "direct_mem0.py",
+      "extensions.py",
+      "kompress_compressor.py",
+      "lossless_compaction.py",
+      "mcp_server.py",
+      "mem0_system_adapter.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "registry.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tool_schema_savings_policy.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -514,6 +1055,67 @@
     "line": 71,
     "symbol": "MCPRegistrar",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "antigravity.py",
+      "anyllm.py",
+      "astgrep.py",
+      "base.py",
+      "bm25.py",
+      "cache_aligner.py",
+      "claude.py",
+      "claude_writer.py",
+      "client.py",
+      "code_compressor.py",
+      "code_handler.py",
+      "codex.py",
+      "codex_rate_limits.py",
+      "codex_writer.py",
+      "cohere.py",
+      "content_router.py",
+      "copilot_quota.py",
+      "cursor_writer.py",
+      "diff_compressor.py",
+      "display.py",
+      "embedding.py",
+      "estimator.py",
+      "gemini.py",
+      "generic_writer.py",
+      "google.py",
+      "grok.py",
+      "huggingface.py",
+      "hybrid.py",
+      "install.py",
+      "json_handler.py",
+      "jsonl.py",
+      "kompress_compressor.py",
+      "learn.py",
+      "ledger.py",
+      "litellm.py",
+      "log_compressor.py",
+      "memory.py",
+      "mistral.py",
+      "model.py",
+      "openai.py",
+      "openai_compatible.py",
+      "opencode.py",
+      "pipeline.py",
+      "providers.py",
+      "registry.py",
+      "scanner.py",
+      "search_compressor.py",
+      "semantic.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tiktoken_counter.py",
+      "tokenizer.py",
+      "tracker.py",
+      "universal.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -525,6 +1127,12 @@
     "line": 19,
     "symbol": "LRUMemoryCache",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "client.py",
+      "factory.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -536,6 +1144,11 @@
     "line": 19,
     "symbol": "InMemoryGraphStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "local.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -547,6 +1160,11 @@
     "line": 19,
     "symbol": "InMemoryGraphStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "local.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -558,6 +1176,11 @@
     "line": 37,
     "symbol": "SQLiteGraphStore",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "local.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -569,6 +1192,14 @@
     "line": 80,
     "symbol": "MLModelRegistry",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "dynamic_detector.py",
+      "embedders.py",
+      "metrics.py",
+      "server.py",
+      "trained_router.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -580,6 +1211,59 @@
     "line": 93,
     "symbol": "apply_offline_env",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "agents.py",
+      "analyzer.py",
+      "anthropic.py",
+      "asgi.py",
+      "batch_compression_eval.py",
+      "beacon.py",
+      "before_after.py",
+      "binaries.py",
+      "client.py",
+      "codex_rate_limits.py",
+      "cohere.py",
+      "content_router.py",
+      "copilot_auth.py",
+      "copilot_quota.py",
+      "cost.py",
+      "counterfactual.py",
+      "datasets.py",
+      "direct_mem0.py",
+      "doctor.py",
+      "embedders.py",
+      "embedding.py",
+      "evals.py",
+      "google.py",
+      "html_extraction.py",
+      "huggingface.py",
+      "judge.py",
+      "kompress_compressor.py",
+      "kompress_remote.py",
+      "learn.py",
+      "litellm.py",
+      "litellm_callback.py",
+      "litellm_pricing.py",
+      "locomo.py",
+      "main.py",
+      "metrics.py",
+      "ml_models.py",
+      "onnx_router.py",
+      "onnx_runtime.py",
+      "openai.py",
+      "route_advice.py",
+      "runner.py",
+      "runner_v2.py",
+      "savings_tracker.py",
+      "server.py",
+      "session.py",
+      "tls_diagnostics.py",
+      "tracing.py",
+      "update_check.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -591,6 +1275,14 @@
     "line": 197,
     "symbol": "hf_from_pretrained_local_first",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "embedders.py",
+      "embedding.py",
+      "kompress_compressor.py",
+      "ml_models.py",
+      "onnx_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -602,6 +1294,14 @@
     "line": 88,
     "symbol": "Region",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "persistent_metrics.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -613,6 +1313,14 @@
     "line": 586,
     "symbol": "long_context_premium_avoided_usd",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "persistent_metrics.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -624,6 +1332,14 @@
     "line": 657,
     "symbol": "PricedSavings",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "persistent_metrics.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -635,6 +1351,14 @@
     "line": 200,
     "symbol": "rates_for",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "deepseek_prices.py",
+      "litellm_pricing.py",
+      "registry.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -646,6 +1370,29 @@
     "line": 33,
     "symbol": "resolve_1m_model",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "config.py",
+      "diagnostics.py",
+      "helpers.py",
+      "images.py",
+      "init.py",
+      "install.py",
+      "live.py",
+      "model_metadata.py",
+      "openai.py",
+      "planner.py",
+      "proxy_routes.py",
+      "proxy_targets.py",
+      "responses.py",
+      "runtime.py",
+      "server.py",
+      "supervisors.py",
+      "vscode.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -657,6 +1404,29 @@
     "line": 124,
     "symbol": "remote_control_gate_message",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "config.py",
+      "diagnostics.py",
+      "helpers.py",
+      "images.py",
+      "init.py",
+      "install.py",
+      "live.py",
+      "model_metadata.py",
+      "openai.py",
+      "planner.py",
+      "proxy_routes.py",
+      "proxy_targets.py",
+      "responses.py",
+      "runtime.py",
+      "server.py",
+      "supervisors.py",
+      "vscode.py",
+      "wrap.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -668,6 +1438,29 @@
     "line": 124,
     "symbol": "remote_control_gate_message",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "config.py",
+      "diagnostics.py",
+      "helpers.py",
+      "images.py",
+      "init.py",
+      "install.py",
+      "live.py",
+      "model_metadata.py",
+      "openai.py",
+      "planner.py",
+      "proxy_routes.py",
+      "proxy_targets.py",
+      "responses.py",
+      "runtime.py",
+      "server.py",
+      "supervisors.py",
+      "vscode.py",
+      "wrap.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -679,6 +1472,11 @@
     "line": 19,
     "symbol": "merge_beta_tokens",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "helpers.py",
+      "turn_hooks.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -690,6 +1488,15 @@
     "line": 56,
     "symbol": "serialize_body_canonical",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "helpers.py",
+      "openai.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -701,6 +1508,12 @@
     "line": 149,
     "symbol": "apply_to_tags",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gemini.py",
+      "openai.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -712,6 +1525,16 @@
     "line": 548,
     "symbol": "request_cost_usd",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gemini.py",
+      "openai.py",
+      "outcome.py",
+      "prometheus_metrics.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -723,6 +1546,16 @@
     "line": 1639,
     "symbol": "totals",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gemini.py",
+      "openai.py",
+      "outcome.py",
+      "prometheus_metrics.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -734,6 +1567,12 @@
     "line": 27,
     "symbol": "ForwardedHeaderResolution",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "forwarded_headers.py",
+      "rate_limit_identity.py",
+      "server.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -745,6 +1584,10 @@
     "line": 305,
     "symbol": "install",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -756,6 +1599,11 @@
     "line": 641,
     "symbol": "PendingTurnRegistry",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "gateway_extension.py",
+      "openai.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -767,6 +1615,11 @@
     "line": 807,
     "symbol": "compact_gateway_tools",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "gateway_extension.py",
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -778,6 +1631,11 @@
     "line": 852,
     "symbol": "repair_tool_search_history",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "gateway_extension.py",
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -789,6 +1647,11 @@
     "line": 1265,
     "symbol": "shape_gateway_body",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "gateway_extension.py",
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -800,6 +1663,24 @@
     "line": 11198,
     "symbol": "handle_compress",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "direct_mem0.py",
+      "embedders.py",
+      "gateway_turn.py",
+      "harness.py",
+      "html_extraction.py",
+      "judge.py",
+      "live.py",
+      "providers.py",
+      "public_errors.py",
+      "registry.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -811,6 +1692,24 @@
     "line": 11198,
     "symbol": "handle_compress",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "direct_mem0.py",
+      "embedders.py",
+      "gateway_turn.py",
+      "harness.py",
+      "html_extraction.py",
+      "judge.py",
+      "live.py",
+      "providers.py",
+      "public_errors.py",
+      "registry.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -822,6 +1721,31 @@
     "line": 1744,
     "symbol": "overload_retry_is_futile",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -833,6 +1757,31 @@
     "line": 2308,
     "symbol": "SessionBetaTracker",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -844,6 +1793,31 @@
     "line": 2536,
     "symbol": "serialize_tool_definition_canonical",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -855,6 +1829,31 @@
     "line": 3448,
     "symbol": "strip_output_only_request_blocks",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -866,6 +1865,31 @@
     "line": 3767,
     "symbol": "tool_search_hint_pending",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -877,6 +1901,31 @@
     "line": 3779,
     "symbol": "take_tool_search_scan_slot",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -888,6 +1937,31 @@
     "line": 3902,
     "symbol": "resolved_core_tools",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -899,6 +1973,31 @@
     "line": 4263,
     "symbol": "inject_tool_search_deferral",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -910,6 +2009,31 @@
     "line": 4816,
     "symbol": "inject_tool_search_deferral_openai",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -921,6 +2045,31 @@
     "line": 4894,
     "symbol": "apply_keep_last_turns",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -932,6 +2081,11 @@
     "line": 112,
     "symbol": "apply_to_tags",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -943,6 +2097,67 @@
     "line": 49,
     "symbol": "ToolResultInterceptor",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "antigravity.py",
+      "anyllm.py",
+      "astgrep.py",
+      "base.py",
+      "bm25.py",
+      "cache_aligner.py",
+      "claude.py",
+      "claude_writer.py",
+      "client.py",
+      "code_compressor.py",
+      "code_handler.py",
+      "codex.py",
+      "codex_rate_limits.py",
+      "codex_writer.py",
+      "cohere.py",
+      "content_router.py",
+      "copilot_quota.py",
+      "cursor_writer.py",
+      "diff_compressor.py",
+      "display.py",
+      "embedding.py",
+      "estimator.py",
+      "gemini.py",
+      "generic_writer.py",
+      "google.py",
+      "grok.py",
+      "huggingface.py",
+      "hybrid.py",
+      "install.py",
+      "json_handler.py",
+      "jsonl.py",
+      "kompress_compressor.py",
+      "learn.py",
+      "ledger.py",
+      "litellm.py",
+      "log_compressor.py",
+      "memory.py",
+      "mistral.py",
+      "model.py",
+      "openai.py",
+      "openai_compatible.py",
+      "opencode.py",
+      "pipeline.py",
+      "providers.py",
+      "registry.py",
+      "scanner.py",
+      "search_compressor.py",
+      "semantic.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tiktoken_counter.py",
+      "tokenizer.py",
+      "tracker.py",
+      "universal.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -954,6 +2169,67 @@
     "line": 115,
     "symbol": "register",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "antigravity.py",
+      "anyllm.py",
+      "astgrep.py",
+      "base.py",
+      "bm25.py",
+      "cache_aligner.py",
+      "claude.py",
+      "claude_writer.py",
+      "client.py",
+      "code_compressor.py",
+      "code_handler.py",
+      "codex.py",
+      "codex_rate_limits.py",
+      "codex_writer.py",
+      "cohere.py",
+      "content_router.py",
+      "copilot_quota.py",
+      "cursor_writer.py",
+      "diff_compressor.py",
+      "display.py",
+      "embedding.py",
+      "estimator.py",
+      "gemini.py",
+      "generic_writer.py",
+      "google.py",
+      "grok.py",
+      "huggingface.py",
+      "hybrid.py",
+      "install.py",
+      "json_handler.py",
+      "jsonl.py",
+      "kompress_compressor.py",
+      "learn.py",
+      "ledger.py",
+      "litellm.py",
+      "log_compressor.py",
+      "memory.py",
+      "mistral.py",
+      "model.py",
+      "openai.py",
+      "openai_compatible.py",
+      "opencode.py",
+      "pipeline.py",
+      "providers.py",
+      "registry.py",
+      "scanner.py",
+      "search_compressor.py",
+      "semantic.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tiktoken_counter.py",
+      "tokenizer.py",
+      "tracker.py",
+      "universal.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -965,6 +2241,12 @@
     "line": 115,
     "symbol": "apply_to_tags",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gemini.py",
+      "openai.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -976,6 +2258,12 @@
     "line": 527,
     "symbol": "compute_memory_tool_definitions",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py",
+      "server.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -987,6 +2275,11 @@
     "line": 143,
     "symbol": "conversation_key_from_body",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "conversation_savings.py",
+      "output_savings.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -998,6 +2291,11 @@
     "line": 227,
     "symbol": "assign_arm",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "conversation_savings.py",
+      "output_savings.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1009,6 +2307,15 @@
     "line": 250,
     "symbol": "resolve_verbosity_level",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gateway_turn.py",
+      "learn.py",
+      "openai.py",
+      "server.py",
+      "verbosity.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1020,6 +2327,11 @@
     "line": 190,
     "symbol": "PersistentMetricsState",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "savings_tracker.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1031,6 +2343,11 @@
     "line": 575,
     "symbol": "record_stack",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1042,6 +2359,11 @@
     "line": 605,
     "symbol": "record_compression",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1053,6 +2375,11 @@
     "line": 651,
     "symbol": "record_extension_savings",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "cost.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1064,6 +2391,11 @@
     "line": 71,
     "symbol": "redact_image_base64",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "prometheus_metrics.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1075,6 +2407,13 @@
     "line": 285,
     "symbol": "ItemLedger",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "main.py",
+      "openai.py",
+      "outcome.py",
+      "streaming.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1086,6 +2425,19 @@
     "line": 228,
     "symbol": "accumulate",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "analyzer.py",
+      "anthropic.py",
+      "gateway_extension.py",
+      "gemini.py",
+      "metrics.py",
+      "openai.py",
+      "outcome.py",
+      "prometheus_metrics.py",
+      "tool_schema_savings_policy.py",
+      "turn_hooks.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1097,6 +2449,14 @@
     "line": 540,
     "symbol": "estimate_request_savings_usd",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "project_context.py",
+      "project_policy.py",
+      "prometheus_metrics.py",
+      "savings_ledger.py",
+      "server.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1108,6 +2468,14 @@
     "line": 2185,
     "symbol": "flush",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "project_context.py",
+      "project_policy.py",
+      "prometheus_metrics.py",
+      "savings_ledger.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1119,6 +2487,19 @@
     "line": 452,
     "symbol": "apply_global_tls_relaxation",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "binaries.py",
+      "copilot_auth.py",
+      "doctor.py",
+      "live.py",
+      "main.py",
+      "openai.py",
+      "proxy.py",
+      "server.py",
+      "tls_diagnostics.py",
+      "update_check.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1130,6 +2511,19 @@
     "line": 515,
     "symbol": "ensure_process_trust",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "binaries.py",
+      "copilot_auth.py",
+      "doctor.py",
+      "live.py",
+      "main.py",
+      "openai.py",
+      "proxy.py",
+      "server.py",
+      "tls_diagnostics.py",
+      "update_check.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1141,6 +2535,14 @@
     "line": 391,
     "symbol": "describe_upstream_failure",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "doctor.py",
+      "openai.py",
+      "streaming.py",
+      "wrap.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1152,6 +2554,10 @@
     "line": 9,
     "symbol": "serialize_tool_definition_canonical",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "helpers.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1163,6 +2569,15 @@
     "line": 187,
     "symbol": "net_hook_tool_saving",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gateway_turn.py",
+      "openai.py",
+      "outcome.py",
+      "server.py",
+      "turn_hooks.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1174,6 +2589,12 @@
     "line": 123,
     "symbol": "register",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "debug_introspection.py",
+      "openai.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1185,6 +2606,12 @@
     "line": 140,
     "symbol": "deregister",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "debug_introspection.py",
+      "openai.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1196,6 +2623,11 @@
     "line": 397,
     "symbol": "score_batch",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "hybrid.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1207,6 +2639,13 @@
     "line": 329,
     "symbol": "CodexRateLimitState",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "openai.py",
+      "server.py",
+      "streaming.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1218,6 +2657,11 @@
     "line": 133,
     "symbol": "CopilotQuotaState",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "server.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1229,6 +2673,10 @@
     "line": 52,
     "symbol": "TelemetryCollector",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1240,6 +2688,19 @@
     "line": 1190,
     "symbol": "SessionAggregator",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "hooks.py",
+      "langgraph.py",
+      "mcp_server.py",
+      "outcome.py",
+      "pipeline.py",
+      "prometheus_metrics.py",
+      "server.py",
+      "telemetry.py",
+      "toin.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1251,6 +2712,19 @@
     "line": 1773,
     "symbol": "post_session_event",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "hooks.py",
+      "langgraph.py",
+      "mcp_server.py",
+      "outcome.py",
+      "pipeline.py",
+      "prometheus_metrics.py",
+      "server.py",
+      "telemetry.py",
+      "toin.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1262,6 +2736,19 @@
     "line": 1773,
     "symbol": "post_session_event",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "hooks.py",
+      "langgraph.py",
+      "mcp_server.py",
+      "outcome.py",
+      "pipeline.py",
+      "prometheus_metrics.py",
+      "server.py",
+      "telemetry.py",
+      "toin.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1273,6 +2760,16 @@
     "line": 513,
     "symbol": "ToolIntelligenceNetwork",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "analyzer.py",
+      "compression_store.py",
+      "content_router.py",
+      "server.py",
+      "smart_crusher.py",
+      "toin_publish.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1284,6 +2781,16 @@
     "line": 1850,
     "symbol": "get_toin",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "analyzer.py",
+      "compression_store.py",
+      "content_router.py",
+      "server.py",
+      "smart_crusher.py",
+      "toin_publish.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1295,6 +2802,10 @@
     "line": 51,
     "symbol": "PlatformTarget",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1306,6 +2817,10 @@
     "line": 331,
     "symbol": "ScenarioRunReport",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1317,6 +2832,10 @@
     "line": 389,
     "symbol": "calculate_anchor_budget",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1328,6 +2847,11 @@
     "line": 181,
     "symbol": "cold_recompact_messages",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1339,6 +2863,11 @@
     "line": 181,
     "symbol": "cold_recompact_messages",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1350,6 +2879,11 @@
     "line": 181,
     "symbol": "cold_recompact_messages",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1361,6 +2895,11 @@
     "line": 181,
     "symbol": "cold_recompact_messages",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1372,6 +2911,10 @@
     "line": 255,
     "symbol": "factor_values",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "compress.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1383,6 +2926,12 @@
     "line": 91,
     "symbol": "CompressionPolicy",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "content_router.py",
+      "openai.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1394,6 +2943,12 @@
     "line": 147,
     "symbol": "net_mutation_gain",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "content_router.py",
+      "openai.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1405,6 +2960,10 @@
     "line": 63,
     "symbol": "CompressorDescriptor",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1416,6 +2975,10 @@
     "line": 104,
     "symbol": "CompressOutput",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1427,6 +2990,10 @@
     "line": 120,
     "symbol": "ConfigCompressor",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1438,6 +3005,20 @@
     "line": 1829,
     "symbol": "CompressionCache",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "adversarial_grid.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "cold_prefix.py",
+      "compress.py",
+      "compression_batches.py",
+      "compression_only.py",
+      "compression_units.py",
+      "openai.py",
+      "pipeline.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1449,6 +3030,20 @@
     "line": 1914,
     "symbol": "get",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "adversarial_grid.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "cold_prefix.py",
+      "compress.py",
+      "compression_batches.py",
+      "compression_only.py",
+      "compression_units.py",
+      "openai.py",
+      "pipeline.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1460,6 +3055,20 @@
     "line": 1998,
     "symbol": "is_skipped",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "adversarial_grid.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "cold_prefix.py",
+      "compress.py",
+      "compression_batches.py",
+      "compression_only.py",
+      "compression_units.py",
+      "openai.py",
+      "pipeline.py"
+    ],
     "probe": "prop-concurrency"
   },
   {
@@ -1471,6 +3080,10 @@
     "line": 37,
     "symbol": "is_dense_line",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1482,6 +3095,15 @@
     "line": 1430,
     "symbol": "ensure_background_download",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "code_compressor.py",
+      "content_router.py",
+      "html_extraction.py",
+      "kompress_remote.py",
+      "server.py",
+      "universal.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1493,6 +3115,15 @@
     "line": 1541,
     "symbol": "ensure_background_prefetch",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "code_compressor.py",
+      "content_router.py",
+      "html_extraction.py",
+      "kompress_remote.py",
+      "server.py",
+      "universal.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1504,6 +3135,15 @@
     "line": 1913,
     "symbol": "ensure_background_load",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "code_compressor.py",
+      "content_router.py",
+      "html_extraction.py",
+      "kompress_remote.py",
+      "server.py",
+      "universal.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1515,6 +3155,15 @@
     "line": 1924,
     "symbol": "compress",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "code_compressor.py",
+      "content_router.py",
+      "html_extraction.py",
+      "kompress_remote.py",
+      "server.py",
+      "universal.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1526,6 +3175,13 @@
     "line": 290,
     "symbol": "search_heading",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1537,6 +3193,13 @@
     "line": 361,
     "symbol": "search_dir_heading",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1548,6 +3211,13 @@
     "line": 447,
     "symbol": "path_heading",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1559,6 +3229,13 @@
     "line": 447,
     "symbol": "path_heading",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1570,6 +3247,13 @@
     "line": 533,
     "symbol": "compact_lossless",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1581,6 +3265,13 @@
     "line": 533,
     "symbol": "compact_lossless",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1592,6 +3283,13 @@
     "line": 533,
     "symbol": "compact_lossless",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "config_compressor.py",
+      "content_detector.py",
+      "content_router.py",
+      "mixed_content.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1603,6 +3301,10 @@
     "line": 72,
     "symbol": "set_lossless_provider",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1614,6 +3316,11 @@
     "line": 238,
     "symbol": "route_embedded_json",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "dense_line_elider.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1625,6 +3332,10 @@
     "line": 51,
     "symbol": "segment",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1636,6 +3347,10 @@
     "line": 51,
     "symbol": "segment",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1647,6 +3362,19 @@
     "line": 494,
     "symbol": "crush",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "before_after.py",
+      "compression_only.py",
+      "config_compressor.py",
+      "content_router.py",
+      "core.py",
+      "hooks.py",
+      "langgraph.py",
+      "server.py",
+      "tabular_ingest.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1658,6 +3386,19 @@
     "line": 494,
     "symbol": "crush",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "before_after.py",
+      "compression_only.py",
+      "config_compressor.py",
+      "content_router.py",
+      "core.py",
+      "hooks.py",
+      "langgraph.py",
+      "server.py",
+      "tabular_ingest.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1669,6 +3410,19 @@
     "line": 775,
     "symbol": "crush_array_json",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "before_after.py",
+      "compression_only.py",
+      "config_compressor.py",
+      "content_router.py",
+      "core.py",
+      "hooks.py",
+      "langgraph.py",
+      "server.py",
+      "tabular_ingest.py"
+    ],
     "probe": "prop-roundtrip"
   },
   {
@@ -1680,6 +3434,10 @@
     "line": 111,
     "symbol": "compact_thinking_to_text",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1691,6 +3449,10 @@
     "line": 246,
     "symbol": "compact_reasoning_openai_chat",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1702,6 +3464,29 @@
     "line": 48,
     "symbol": "remember_bounded",
     "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "anyllm.py",
+      "batch.py",
+      "bedrock.py",
+      "cache_aligner.py",
+      "client.py",
+      "compress.py",
+      "gemini.py",
+      "generator.py",
+      "helpers.py",
+      "jsonl.py",
+      "litellm.py",
+      "litellm_pricing.py",
+      "openai.py",
+      "pipeline.py",
+      "registry.py",
+      "session.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "streaming.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1713,6 +3498,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1724,6 +3513,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "evals.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1735,6 +3528,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "evals.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1746,6 +3543,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "__init__.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1757,6 +3558,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "evals.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1768,6 +3573,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "server.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1779,6 +3588,11 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "helpers.py",
+      "turn_hooks.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1790,6 +3604,15 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gateway_turn.py",
+      "learn.py",
+      "openai.py",
+      "server.py",
+      "verbosity.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1801,6 +3624,10 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "output_shaper.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1812,21 +3639,17 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "gemini.py",
+      "openai.py",
+      "streaming.py"
+    ],
     "probe": "prop-bounds"
   },
   {
     "id": "c-0166",
-    "kind": "determinism",
-    "tier": "A",
-    "text": "Detecting the\nsignals at the proxy (fast-skip from reply timing, interrupt from a cancelled\nstream) is the caller's job; keeping detection out of here makes the control\nlogic deterministic and testable, and lets the live path enable only the\nsignals it can measure reliably.",
-    "source": "D:\\projects\\headroom\\headroom\\proxy\\verbosity_controller.py",
-    "line": 1,
-    "symbol": null,
-    "visibility": "module",
-    "probe": "prop-deterministic"
-  },
-  {
-    "id": "c-0167",
     "kind": "idempotence",
     "tier": "A",
     "text": "* ``deregister`` must be idempotent.",
@@ -1834,10 +3657,16 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "debug_introspection.py",
+      "openai.py",
+      "server.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
-    "id": "c-0168",
+    "id": "c-0167",
     "kind": "determinism",
     "tier": "A",
     "text": "Deterministic runtime rollout policy and provenance.",
@@ -1845,10 +3674,23 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "config.py",
+      "litellm.py",
+      "main.py",
+      "models.py",
+      "output_shaper.py",
+      "planner.py",
+      "proxy.py",
+      "rollout.py",
+      "server.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
-    "id": "c-0169",
+    "id": "c-0168",
     "kind": "determinism",
     "tier": "A",
     "text": "The\nrequest path is deterministic: SmartCrusher and the live-zone dispatcher\nread their static configuration only.",
@@ -1856,10 +3698,20 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "analyzer.py",
+      "compression_store.py",
+      "content_router.py",
+      "server.py",
+      "smart_crusher.py",
+      "toin_publish.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
-    "id": "c-0170",
+    "id": "c-0169",
     "kind": "determinism",
     "tier": "A",
     "text": "Why this shape:\n- Per-request mutation tied compression bytes to TOIN's mutable state,\n which made the same input produce different outputs across runs (P2-27,\n P5-56).",
@@ -1867,10 +3719,20 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "analyzer.py",
+      "compression_store.py",
+      "content_router.py",
+      "server.py",
+      "smart_crusher.py",
+      "toin_publish.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
-    "id": "c-0171",
+    "id": "c-0170",
     "kind": "determinism",
     "tier": "A",
     "text": "(For plain-text reasoning, deterministic Kompress-every-turn \u2014 see\n``thinking_compactor`` \u2014 stays cache-stable on warm turns; the cold DROP is the\nextra, aggressive step reserved for when the cache is confirmed gone.)",
@@ -1878,6 +3740,27 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "openai.py"
+    ],
+    "probe": "prop-deterministic"
+  },
+  {
+    "id": "c-0171",
+    "kind": "determinism",
+    "tier": "A",
+    "text": "Pure stdlib, deterministic, never raises (returns input unchanged on any error).",
+    "source": "D:\\projects\\headroom\\headroom\\transforms\\cross_turn_dedup.py",
+    "line": 1,
+    "symbol": null,
+    "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "openai.py"
+    ],
     "probe": "prop-deterministic"
   },
   {
@@ -1889,6 +3772,13 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "compress.py",
+      "pipeline.py",
+      "prometheus_metrics.py",
+      "server.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1900,6 +3790,11 @@
     "line": 1,
     "symbol": null,
     "visibility": "module",
+    "reachable": true,
+    "importers": [
+      "compression_batches.py",
+      "content_router.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -1911,6 +3806,13 @@
     "line": 128,
     "symbol": "_enable_verbose_logging",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1922,6 +3824,14 @@
     "line": 479,
     "symbol": "_apply_1m_to_claude_args",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1933,6 +3843,14 @@
     "line": 604,
     "symbol": "_configure_quiet_cli_env",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1944,6 +3862,14 @@
     "line": 2075,
     "symbol": "_ensure_claude_wrap_selfheal_hook",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1955,6 +3881,14 @@
     "line": 2328,
     "symbol": "_setup_headroom_mcp",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1966,6 +3900,14 @@
     "line": 2594,
     "symbol": "_inject_serena_instructions",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1977,6 +3919,14 @@
     "line": 2885,
     "symbol": "_setup_serena_mcp",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1988,6 +3938,14 @@
     "line": 4259,
     "symbol": "_inject_memory_mcp_config",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -1999,6 +3957,14 @@
     "line": 4319,
     "symbol": "_inject_memory_agents_md",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -2010,6 +3976,14 @@
     "line": 5053,
     "symbol": "_push_runtime_env",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -2021,6 +3995,14 @@
     "line": 5755,
     "symbol": "_unregister_proxy_client",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "doctor.py",
+      "install.py",
+      "main.py",
+      "wrap.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -2032,6 +4014,10 @@
     "line": 398,
     "symbol": "_classify_hook_scripts",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "wrap.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2043,6 +4029,13 @@
     "line": 869,
     "symbol": "_call_claude_cli_streaming",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "agent_savings.py",
+      "learn.py",
+      "perf.py",
+      "server.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2054,6 +4047,16 @@
     "line": 335,
     "symbol": "_merge_recommendations",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "analyzer.py",
+      "base.py",
+      "claude.py",
+      "codex.py",
+      "gemini.py",
+      "grok.py",
+      "opencode.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2065,6 +4068,40 @@
     "line": 153,
     "symbol": "_innermost_headroom_frames",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "_compress_backend.py",
+      "_debug_dump.py",
+      "_failure_logging.py",
+      "anthropic.py",
+      "base.py",
+      "bedrock.py",
+      "cohere.py",
+      "compression_batches.py",
+      "compression_store.py",
+      "content_router.py",
+      "cost.py",
+      "counterfactual.py",
+      "cross_turn_dedup.py",
+      "direct_mem0.py",
+      "extensions.py",
+      "kompress_compressor.py",
+      "lossless_compaction.py",
+      "mcp_server.py",
+      "mem0_system_adapter.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "registry.py",
+      "savings.py",
+      "savings_ledger.py",
+      "savings_tracker.py",
+      "server.py",
+      "smart_crusher.py",
+      "sqlite.py",
+      "tool_schema_savings_policy.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2076,6 +4113,22 @@
     "line": 1388,
     "symbol": "_finalize_pre_upstream",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "harness.py",
+      "html_extraction.py",
+      "judge.py",
+      "memory_handler.py",
+      "openai.py",
+      "providers.py",
+      "public_errors.py",
+      "registry.py",
+      "streaming.py"
+    ],
     "probe": "prop-idempotent"
   },
   {
@@ -2087,6 +4140,31 @@
     "line": 4156,
     "symbol": "_warn_deferred_without_search_tool",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "anthropic.py",
+      "batch.py",
+      "bedrock.py",
+      "compression_decision.py",
+      "gateway_extension.py",
+      "gateway_turn.py",
+      "gemini.py",
+      "image_compression_policy.py",
+      "images.py",
+      "live.py",
+      "mcp_server.py",
+      "memory_decision_policy.py",
+      "memory_handler.py",
+      "model_metadata.py",
+      "openai.py",
+      "outcome.py",
+      "proxy_routes.py",
+      "request_body_limit.py",
+      "response_handler.py",
+      "server.py",
+      "streaming.py",
+      "token_counting.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2098,6 +4176,13 @@
     "line": 414,
     "symbol": "_evict",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "main.py",
+      "openai.py",
+      "outcome.py",
+      "streaming.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2109,6 +4194,13 @@
     "line": 2043,
     "symbol": "_get_compression_cache",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "mcp_server.py",
+      "proxy.py",
+      "reporter.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2120,6 +4212,11 @@
     "line": 193,
     "symbol": "_load_tokenizer",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "registry.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2131,6 +4228,11 @@
     "line": 193,
     "symbol": "_load_tokenizer",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "registry.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2142,6 +4244,13 @@
     "line": 107,
     "symbol": "_get_encoding",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "anthropic.py",
+      "openai.py",
+      "registry.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2153,6 +4262,16 @@
     "line": 830,
     "symbol": "_fixed_width_gutters",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "code_compressor.py",
+      "config_compressor.py",
+      "content_router.py",
+      "mixed_content.py",
+      "smart_crusher.py",
+      "tabular_ingest.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2164,6 +4283,20 @@
     "line": 1308,
     "symbol": "_rust_detect_watchdogged",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "adversarial_grid.py",
+      "batch_compression_eval.py",
+      "before_after.py",
+      "cold_prefix.py",
+      "compress.py",
+      "compression_batches.py",
+      "compression_only.py",
+      "compression_units.py",
+      "openai.py",
+      "pipeline.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2175,6 +4308,10 @@
     "line": 361,
     "symbol": "_post_within",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "content_router.py"
+    ],
     "probe": "prop-bounds"
   },
   {
@@ -2186,6 +4323,11 @@
     "line": 122,
     "symbol": "_scan_spans",
     "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "content_router.py",
+      "dense_line_elider.py"
+    ],
     "probe": "prop-bounds"
   }
 ]

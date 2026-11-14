@@ -91,6 +91,8 @@ class Claim:
     line: int
     symbol: str | None
     visibility: str  # public | module | docs | comment
+    reachable: bool  # imported by some other module in the tree
+    importers: list[str]
     probe: str
 
 
@@ -137,7 +139,7 @@ def _docstring_nodes(tree: ast.AST) -> list[tuple[str | None, str, int, str]]:
     return out
 
 
-def scan_python(path: Path) -> list[Claim]:
+def scan_python(path: Path, importers: list[str]) -> list[Claim]:
     try:
         source = path.read_text(encoding="utf-8")
         tree = ast.parse(source)
@@ -146,11 +148,11 @@ def scan_python(path: Path) -> list[Claim]:
     claims: list[Claim] = []
     for symbol, doc, line, visibility in _docstring_nodes(tree):
         for kind, sentence, _offset in _claims_in(doc):
-            claims.append(_make(path, line, symbol, visibility, kind, sentence))
+            claims.append(_make(path, line, symbol, visibility, kind, sentence, importers))
     return claims
 
 
-def scan_markdown(path: Path) -> list[Claim]:
+def scan_markdown(path: Path, importers: list[str]) -> list[Claim]:
     try:
         text = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
@@ -164,11 +166,19 @@ def scan_markdown(path: Path) -> list[Claim]:
         if in_fence:
             continue
         for kind, sentence, _offset in _claims_in(raw):
-            claims.append(_make(path, number, None, "docs", kind, sentence))
+            claims.append(_make(path, number, None, "docs", kind, sentence, importers))
     return claims
 
 
-def _make(path: Path, line: int, symbol: str | None, visibility: str, kind: str, sentence: str) -> Claim:
+def _make(
+    path: Path,
+    line: int,
+    symbol: str | None,
+    visibility: str,
+    kind: str,
+    sentence: str,
+    importers: list[str],
+) -> Claim:
     probe = FAMILIES[kind][1]
     return Claim(
         id="",
@@ -179,8 +189,38 @@ def _make(path: Path, line: int, symbol: str | None, visibility: str, kind: str,
         line=line,
         symbol=symbol,
         visibility=visibility,
+        reachable=bool(importers),
+        importers=importers,
         probe=probe,
     )
+
+
+def _import_stems(path: Path) -> set[str]:
+    """Last component of every module this file imports (best effort, AST-based)."""
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+    except (OSError, SyntaxError, UnicodeDecodeError):
+        return set()
+    stems: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            if node.module:
+                stems.add(node.module.rsplit(".", 1)[-1])
+            for alias in node.names:
+                stems.add(alias.name.rsplit(".", 1)[-1])
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                stems.add(alias.name.rsplit(".", 1)[-1])
+    return stems
+
+
+def _importer_map(paths: list[Path]) -> dict[str, list[str]]:
+    """module stem -> files that import it."""
+    importers: dict[str, list[str]] = {}
+    for path in paths:
+        for stem in _import_stems(path):
+            importers.setdefault(stem, []).append(path.name)
+    return {stem: sorted(set(names)) for stem, names in importers.items()}
 
 
 VISIBILITY_RANK = {"public": 0, "module": 1, "docs": 2}
@@ -192,17 +232,30 @@ def scan(
     include_tests: bool = False,
     tier: str = "A",
     max_per_family: int = 40,
+    reachable_only: bool = True,
 ) -> list[Claim]:
     patterns = ("*.py", "*.md", "*.rst")
+    skipped = {".git", ".venv", "node_modules"}
+    py_paths = [
+        path
+        for path in sorted(root.rglob("*.py"))
+        if not (skipped & set(path.parts))
+        and (include_tests or not ("test" in path.name or "tests" in set(path.parts)))
+    ]
+    importers_by_stem = _importer_map(py_paths)
+
     claims: list[Claim] = []
     for pattern in patterns:
         for path in sorted(root.rglob(pattern)):
             parts = set(path.parts)
-            if ".git" in parts or ".venv" in parts or "node_modules" in parts:
+            if skipped & parts:
                 continue
             if not include_tests and ("test" in path.name or "tests" in parts):
                 continue
-            claims.extend(scan_python(path) if path.suffix == ".py" else scan_markdown(path))
+            importers = importers_by_stem.get(path.stem, []) if path.suffix == ".py" else []
+            claims.extend(
+                scan_python(path, importers) if path.suffix == ".py" else scan_markdown(path, importers)
+            )
 
     # Stable ids, deduped on (source, line, kind, text).
     seen: set[tuple[str, int, str, str]] = set()
@@ -214,6 +267,8 @@ def scan(
         seen.add(key)
         unique.append(claim)
 
+    if reachable_only:
+        unique = [c for c in unique if c.reachable]
     if tier != "all":
         unique = [c for c in unique if c.tier == tier]
     unique.sort(key=lambda c: (VISIBILITY_RANK.get(c.visibility, 9), c.source, c.line))
@@ -239,6 +294,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--include-tests", action="store_true")
     parser.add_argument("--tier", choices=["A", "B", "all"], default="A", help="A = strong contracts only")
     parser.add_argument("--max-per-family", type=int, default=40)
+    parser.add_argument(
+        "--include-unreachable",
+        action="store_true",
+        help="also report claims in modules nothing imports (dead code)",
+    )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args(argv)
 
@@ -252,6 +312,7 @@ def main(argv: list[str] | None = None) -> int:
         include_tests=args.include_tests,
         tier=args.tier,
         max_per_family=args.max_per_family,
+        reachable_only=not args.include_unreachable,
     )
     args.out.write_text(json.dumps([asdict(c) for c in claims], indent=2) + "\n", encoding="utf-8")
 
