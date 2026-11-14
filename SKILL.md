@@ -114,3 +114,12 @@ wastes a probe. `claim_scan` builds an import map and marks each claim `reachabl
 `importers`; unreachable claims are dropped unless `--include-unreachable` is passed. Multi-line
 imports count, because a lazy `from pkg.mod import (` block is a real caller even when a one-line
 grep misses it.
+## Probe execution
+
+`python run.py probe <run> --python <repo interpreter> --cwd <repo>` runs every `probes/*.py` and
+records `probe-results.json`: exit `0` PASS, `1` FAIL, `2` INCONCLUSIVE, `3` CHECKER_BUG. A probe may
+declare `CLAIM = "c-0125"` to attach itself to a claim; the runner reads it as text and never imports
+the probe.
+
+A failure caused by out-of-contract input is `not_a_bug`, not a finding: provider-native messages are
+a list of dicts, so `[None]` raising AttributeError is not a bug in the code under audit.

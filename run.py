@@ -19,6 +19,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -94,6 +96,78 @@ def cmd_claims(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_probe(args: argparse.Namespace) -> int:
+    """Execute every probe under runs/<name>/probes and record the verdicts.
+
+    Generic by construction: a probe is any ``.py`` file that exits 0/1/2/3. The tool
+    does not import it, does not know the language of the audited repo, and does not
+    assume what a claim is about — it records what the probe printed.
+    """
+    path = run_dir(args.name)
+    probes_dir = path / "probes"
+    if not probes_dir.exists():
+        print(f"no probes/ under {path}", file=sys.stderr)
+        return 2
+
+    probes = sorted(probes_dir.glob("*.py"))
+    if not probes:
+        print(f"no probe scripts under {probes_dir}")
+        return 0
+
+    python = args.python or sys.executable
+    cwd = Path(args.cwd).resolve() if args.cwd else path
+    results = []
+    for probe in probes:
+        claim = _probe_claim(probe)
+        try:
+            completed = subprocess.run(
+                [python, str(probe)],
+                cwd=str(cwd),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=args.timeout,
+            )
+            code = completed.returncode
+            output = (completed.stdout or "") + (completed.stderr or "")
+        except subprocess.TimeoutExpired:
+            code = -1
+            output = f"timeout after {args.timeout}s"
+        verdict = VERDICTS.get(code, f"ERROR({code})")
+        results.append(
+            {
+                "probe": probe.name,
+                "claim": claim,
+                "exit_code": code,
+                "verdict": verdict,
+                "output": output.strip()[-4000:],
+            }
+        )
+        print(f"{verdict:12s} {probe.name}")
+
+    (path / "probe-results.json").write_text(
+        json.dumps({"python": python, "cwd": str(cwd), "results": results}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    failures = sum(1 for r in results if r["verdict"] in {"FAIL", "CHECKER_BUG", "ERROR"})
+    print(f"\n{len(results)} probes, {failures} needing attention -> {path / 'probe-results.json'}")
+    return 0
+
+
+VERDICTS = {0: "PASS", 1: "FAIL", 2: "INCONCLUSIVE", 3: "CHECKER_BUG"}
+
+
+def _probe_claim(probe: Path) -> str | None:
+    """Read ``CLAIM = "c-0001"`` from a probe without importing it."""
+    try:
+        text = probe.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    match = re.search(r'^CLAIM\s*=\s*["\'](c-\d+)["\']', text, re.MULTILINE)
+    return match.group(1) if match else None
+
+
 def cmd_pending(phase: str) -> int:
     print(f"phase '{phase}' is not implemented in v0.1.")
     print(f"planned: {PENDING[phase]}")
@@ -136,7 +210,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_claims.add_argument("--include-tests", action="store_true")
     p_claims.set_defaults(func=cmd_claims)
 
-    for phase in ("gate", "probe", "shrink", "verify", "report"):
+    p_probe = sub.add_parser("probe", help="phase 2: run every probe and record verdicts")
+    p_probe.add_argument("name")
+    p_probe.add_argument("--python", help="interpreter that can import the audited repo")
+    p_probe.add_argument("--cwd", help="working directory for the probes (default: the run dir)")
+    p_probe.add_argument("--timeout", type=int, default=300)
+    p_probe.set_defaults(func=cmd_probe)
+
+    for phase in ("gate", "shrink", "verify", "report"):
         p = sub.add_parser(phase, help=f"phase: {phase}")
         p.add_argument("name")
         p.set_defaults(func=lambda _a, _p=phase: cmd_pending(_p))

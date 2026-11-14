@@ -13,6 +13,7 @@ hide the result.
 """
 
 from __future__ import annotations
+CLAIM = "c-0125"  # bug-checkup claim id
 
 import json
 import random

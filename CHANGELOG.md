@@ -34,3 +34,10 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
 - Claim scan records reachability and importers; dead-module claims are filtered by default
   (`--include-unreachable` to keep them). Multi-line imports are parsed, which corrected a
   false "dead code" call made by grep in the headroom audit.
+## [0.1.5] - 2026-11-15
+
+- Generic probe executor: `run.py probe` runs `probes/*.py`, records exit codes as verdicts, and
+  maps probes to claims via a `CLAIM = "c-0001"` line read as text.
+- Probes checked in for headroom: `factor_values` round-trip, `cross_turn_dedup` prefix
+  monotonicity and accuracy, `thinking_compactor` keep-last/drop/sticky-floor/determinism/
+  fail-open. All PASS; no finding.

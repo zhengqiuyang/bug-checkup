@@ -1,0 +1,34 @@
+{
+  "python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
+  "cwd": "D:\\projects\\headroom",
+  "results": [
+    {
+      "probe": "probe_cross_turn_dedup_accuracy.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 45 scenarios, every folded span present verbatim in an earlier block (92 folds)"
+    },
+    {
+      "probe": "probe_cross_turn_dedup_prefix_monotonic.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 38 scenarios, prefix-monotonic and deterministic (72 spans folded)"
+    },
+    {
+      "probe": "probe_factor_values_roundtrip.py",
+      "claim": "c-0125",
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 9 fixed + 60 random cases preserved the decoded data (61 blocks actually rewritten)"
+    },
+    {
+      "probe": "probe_thinking_compactor_semantics.py",
+      "claim": "c-0086",
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: keep-last, drop, sticky floor, determinism, no-mutation, fail-open, inline think, weird shapes\nthinking compaction failed (kompress exploded); leaving block untouched\nthinking compaction failed (kompress exploded); leaving block untouched"
+    }
+  ]
+}
