@@ -20,3 +20,7 @@ Form frozen: run layout, artifact schemas, report/issue/PR templates, and a phas
   prove it exercised the code or report INCONCLUSIVE.
 - First real probe checked in: actor_values round-trip (claim c-0125) — PASS over 9 fixed + 60
   random tables, 61 blocks actually rewritten.
+## [0.1.2] - 2026-11-15
+
+- Renamed to `bug-checkup`: the tool is a checkup for a repository — claims are the checklist,
+  probes are the tests, the report is the checkup result.

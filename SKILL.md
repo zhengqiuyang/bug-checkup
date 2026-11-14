@@ -1,9 +1,9 @@
 ---
-name: promisebreaker
+name: bug-checkup
 description: Find correctness bugs — code violating a contract it states about itself (lossless, idempotent, reversible, deterministic, thread-safe) — and prove each with an executable repro and a red/green patch. Use for repo audits, "find real bugs", or preparing a contribution to a repository you do not maintain. Not a security audit.
 ---
 
-# promisebreaker
+# bug-checkup
 
 Find bugs where the code **contradicts its own stated contract**, and prove it. Sibling of
 `security-audit` (trust boundaries); this skill covers data and lifecycle correctness.

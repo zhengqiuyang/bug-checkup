@@ -1,4 +1,4 @@
-# promisebreaker — design
+# bug-checkup — design
 
 A coding-agent skill that finds **correctness bugs** — a program violating a contract it states about
 itself — and proves each one with an executable artifact.

@@ -1,4 +1,4 @@
-# promisebreaker · v0.1
+# bug-checkup · v0.1
 
 **Find the bugs where code breaks its own promise.**
 

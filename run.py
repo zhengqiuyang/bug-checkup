@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""promisebreaker run orchestrator.
+"""bug-checkup run orchestrator.
 
 One CLI for every phase. Each run lives in ``runs/<name>/`` and always uses the same
 artifact names, so runs are comparable and resumable. Phases whose implementation
@@ -121,7 +121,7 @@ def cmd_status(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="promisebreaker orchestrator (v0.1)")
+    parser = argparse.ArgumentParser(description="bug-checkup orchestrator (v0.1)")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_init = sub.add_parser("init", help="create a run directory")
