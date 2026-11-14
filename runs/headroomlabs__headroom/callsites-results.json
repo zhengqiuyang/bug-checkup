@@ -1,0 +1,51 @@
+{
+  "function": "parse_sse_events_from_byte_buffer",
+  "calls": [
+    {
+      "file": "ccr\\response_handler.py",
+      "line": 852,
+      "positional": 1,
+      "keywords": []
+    },
+    {
+      "file": "proxy\\handlers\\streaming.py",
+      "line": 334,
+      "positional": 1,
+      "keywords": []
+    },
+    {
+      "file": "proxy\\handlers\\streaming.py",
+      "line": 1811,
+      "positional": 1,
+      "keywords": []
+    },
+    {
+      "file": "proxy\\helpers.py",
+      "line": 1467,
+      "positional": 1,
+      "keywords": []
+    }
+  ],
+  "definitions": [
+    {
+      "defined_in": "proxy\\helpers.py",
+      "line": 1451,
+      "params": [
+        "buf"
+      ],
+      "optional": [],
+      "keyword_only": [],
+      "unwired": []
+    },
+    {
+      "defined_in": "proxy\\sse_byte_buffer_policy.py",
+      "line": 49,
+      "params": [
+        "buf"
+      ],
+      "optional": [],
+      "keyword_only": [],
+      "unwired": []
+    }
+  ]
+}

@@ -623,6 +623,96 @@ def cmd_collide(args: argparse.Namespace) -> int:
     print("Reminder: a PR that never mentions the issue number is only found by keyword/file search.")
     return 0
 
+
+def cmd_callsites(args: argparse.Namespace) -> int:
+    """Report every production call site of a function and the options it never passes.
+
+    Motivated by a real stall: a fix added an option to a helper and every focused test passed,
+    yet no production caller enabled it, so the end-to-end behavior never changed and review kept
+    asking for the same thing. An option that no call site passes is that defect's fingerprint.
+    """
+    root = Path(args.path).resolve()
+    if not root.is_dir():
+        print(f"{root} is not a directory", file=sys.stderr)
+        return 2
+    files = [
+        file
+        for file in sorted(root.rglob("*.py"))
+        if ".venv" not in file.parts and "node_modules" not in file.parts
+    ]
+
+    definitions: list[tuple[Path, ast.FunctionDef | ast.AsyncFunctionDef]] = []
+    for file in files:
+        try:
+            tree = ast.parse(file.read_text(encoding="utf-8", errors="replace"))
+        except SyntaxError:
+            continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) and node.name == args.function:
+                definitions.append((file, node))
+    if not definitions:
+        print(f"function {args.function!r} not found under {root}", file=sys.stderr)
+        return 2
+
+    calls: list[dict] = []
+    for file in files:
+        try:
+            tree = ast.parse(file.read_text(encoding="utf-8", errors="replace"))
+        except SyntaxError:
+            continue
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            target = node.func
+            name = target.id if isinstance(target, ast.Name) else getattr(target, "attr", None)
+            if name != args.function:
+                continue
+            keyword_names = {kw.arg for kw in node.keywords if kw.arg}
+            calls.append(
+                {
+                    "file": str(file.relative_to(root)),
+                    "line": node.lineno,
+                    "positional": len(node.args),
+                    "keywords": sorted(keyword_names),
+                }
+            )
+
+    results = []
+    for file, node in definitions:
+        args_node = node.args
+        params = [arg.arg for arg in [*args_node.posonlyargs, *args_node.args]]
+        options = [arg.arg for arg in args_node.kwonlyargs]
+        defaults = len(args_node.defaults)
+        optional = params[len(params) - defaults :] if defaults else []
+        passed_keywords = {name for call in calls for name in call["keywords"]}
+        unwired = [name for name in [*optional, *options] if name not in passed_keywords]
+        results.append(
+            {
+                "defined_in": str(file.relative_to(root)),
+                "line": node.lineno,
+                "params": params,
+                "optional": optional,
+                "keyword_only": options,
+                "unwired": unwired,
+            }
+        )
+
+    out = run_dir(args.name)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "callsites-results.json").write_text(
+        json.dumps({"function": args.function, "calls": calls, "definitions": results}, indent=2)
+        + "\n",
+        encoding="utf-8",
+    )
+    print(f"{args.function}: {len(calls)} call site(s), {len(results)} definition(s)")
+    for row in results:
+        print(f"  defined {row['defined_in']}:{row['line']}  params={row['params']}  optional={row['optional']}")
+        if row["unwired"]:
+            print(f"  UNWIRED options (never passed at any call site): {row['unwired']}")
+    for call in calls:
+        print(f"  call {call['file']}:{call['line']} positional={call['positional']} keywords={call['keywords']}")
+    return 0
+
 def cmd_pending(phase: str) -> int:
     print(f"phase '{phase}' is not implemented in v0.1.")
     print(f"planned: {PENDING[phase]}")
@@ -691,6 +781,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_col.add_argument("--keyword", action="append", help="keyword to search open PRs for")
     p_col.add_argument("--file", action="append", help="file whose name is searched in open PRs")
     p_col.set_defaults(func=cmd_collide)
+
+    p_call = sub.add_parser("callsites", help="list call sites and options no caller ever passes")
+    p_call.add_argument("name")
+    p_call.add_argument("--path", required=True, help="tree to scan")
+    p_call.add_argument("--function", required=True)
+    p_call.set_defaults(func=cmd_callsites)
 
     p_auto = sub.add_parser("autoprobe", help="scaffold round-trip probes for inverse function pairs")
     p_auto.add_argument("name")

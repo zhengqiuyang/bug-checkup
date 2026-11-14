@@ -1,0 +1,27 @@
+{
+  "function": "parse",
+  "calls": [
+    {
+      "file": "caller.py",
+      "line": 5,
+      "positional": 1,
+      "keywords": []
+    }
+  ],
+  "definitions": [
+    {
+      "defined_in": "mod.py",
+      "line": 1,
+      "params": [
+        "buf"
+      ],
+      "optional": [],
+      "keyword_only": [
+        "at_eof"
+      ],
+      "unwired": [
+        "at_eof"
+      ]
+    }
+  ]
+}

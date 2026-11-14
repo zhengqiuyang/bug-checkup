@@ -1,8 +1,8 @@
-collide: check for in-flight work before writing code
+callsites: flag options no caller ever passes
 
-Issue #4252 looked unclaimed when searched by number, but an open PR (#4307) had
-implemented the same SSE terminator fix for weeks and never mentioned the issue.
-`run.py collide` now checks three independent signals: issue timeline cross-references,
-open PRs matching keywords, and open PRs touching the same file. Any hit is BLOCKED.
+A real PR stalled for three review rounds because it added an `at_eof` option,
+covered it in focused tests, and never enabled it in a production caller. The
+capability scans definitions and call sites with AST and reports optional or
+keyword-only parameters that no call site passes.
 
-Validated on that case: verdict BLOCKED, both by keyword and by filename.
+Fixture check flags the unwired option; headroom's parser shows 4 call sites.
