@@ -118,6 +118,10 @@ def cmd_probe(args: argparse.Namespace) -> int:
 
     python = args.python or sys.executable
     cwd = Path(args.cwd).resolve() if args.cwd else path
+    env = dict(os.environ)
+    for pair in args.env or []:
+        key, _, value = pair.partition("=")
+        env[key] = value
     results = []
     for probe in probes:
         claim = _probe_claim(probe)
@@ -125,6 +129,7 @@ def cmd_probe(args: argparse.Namespace) -> int:
             completed = subprocess.run(
                 [python, str(probe)],
                 cwd=str(cwd),
+                env=env,
                 capture_output=True,
                 text=True,
                 encoding="utf-8",
@@ -575,6 +580,7 @@ def cmd_collide(args: argparse.Namespace) -> int:
     """
     repo = args.repo
     verdict = "CLEAR"
+    related = False
     findings: list[dict] = []
 
     def add(kind: str, number: int, title: str, url: str) -> None:
@@ -601,16 +607,34 @@ def cmd_collide(args: argparse.Namespace) -> int:
         queries.append(("file", Path(filename).name))
 
     quote = __import__("urllib.parse", fromlist=["quote"]).quote
+    target_names = list(args.file or [])
     for kind, value in queries:
-        for state, label in ((("is:open"), "open"), (("is:merged"), "merged")):
+        for state in ("is:open", "is:merged"):
+            label = "open" if state == "is:open" else "merged"
             result = _gh_json(
                 "api",
                 "search/issues?q=" + quote(f"repo:{repo} is:pr {state} {value}") + "&per_page=20",
             ) or {}
             for item in result.get("items", []):
-                add(f"{label}-pr", item["number"], item["title"], item.get("html_url", ""))
-                if state == "is:open":
+                number = item["number"]
+                # A keyword hit is only a duplicate when the PR actually touches one of the
+                # target files: broad batch PRs match common words without overlapping the work.
+                touches = False
+                if target_names and state == "is:open":
+                    files = _gh_json("api", f"repos/{repo}/pulls/{number}/files?per_page=100") or []
+                    changed = [f.get("filename", "") for f in files]
+                    touches = any(
+                        any(
+                            path.endswith(spec) if "/" in spec else Path(path).name == spec
+                            for path in changed
+                        )
+                        for spec in target_names
+                    )
+                add(f"{label}-pr", number, item["title"], item.get("html_url", ""))
+                if state == "is:open" and (touches or not target_names):
                     verdict = "BLOCKED"
+                elif state == "is:open" and not touches:
+                    related = True
 
     unique = {(f["kind"], f["number"]): f for f in findings}
     findings = sorted(unique.values(), key=lambda f: (f["kind"], f["number"]))
@@ -623,6 +647,7 @@ def cmd_collide(args: argparse.Namespace) -> int:
         "files": args.file or [],
         "verdict": verdict,
         "merged_candidates": has_merged,
+        "related_open_prs": related,
         "findings": findings,
     }
     out_dir = run_dir(args.name or repo.replace("/", "__"))
@@ -635,6 +660,8 @@ def cmd_collide(args: argparse.Namespace) -> int:
         print(f" - {finding['kind']}: #{finding['number']} {finding['title']}")
     if not findings:
         print(" - no linked, matching, or file-touching PRs found (open or merged)")
+    if related:
+        print(" ! open PRs matched keywords but touch none of the target files: related, not a duplicate")
     if has_merged:
         print(" ! merged PRs matched: confirm whether the fix is already in main before implementing")
     print(f"artifact: {artifact}")
@@ -780,6 +807,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_probe.add_argument("--python", help="interpreter that can import the audited repo")
     p_probe.add_argument("--cwd", help="working directory for the probes (default: the run dir)")
     p_probe.add_argument("--timeout", type=int, default=300)
+    p_probe.add_argument("--env", action="append", metavar="KEY=VALUE")
     p_probe.set_defaults(func=cmd_probe)
 
     p_diff = sub.add_parser("diff", help="run a scenario against two versions and diff the output")

@@ -1,0 +1,237 @@
+{
+  "repo": "567-labs/instructor",
+  "issue": null,
+  "keywords": [
+    "multimodal"
+  ],
+  "files": [
+    "providers/anthropic/multimodal.py"
+  ],
+  "verdict": "CLEAR",
+  "merged_candidates": true,
+  "related_open_prs": true,
+  "findings": [
+    {
+      "kind": "merged-pr",
+      "number": 1393,
+      "title": "Adding support for the GenAI Sdk",
+      "url": "https://github.com/567-labs/instructor/pull/1393"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1440,
+      "title": "Bugfix: [minor] Do not fail with google genai models if the content is longer then max file name. Closes #1439",
+      "url": "https://github.com/567-labs/instructor/pull/1440"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1460,
+      "title": "Feat/add openai pdf",
+      "url": "https://github.com/567-labs/instructor/pull/1460"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1462,
+      "title": "feat: support PDFs for Genai SDK",
+      "url": "https://github.com/567-labs/instructor/pull/1462"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1465,
+      "title": "Fix: resolve pyright issues with PDF",
+      "url": "https://github.com/567-labs/instructor/pull/1465"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1520,
+      "title": "Implementing support for responses",
+      "url": "https://github.com/567-labs/instructor/pull/1520"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1619,
+      "title": "feat: Enable Audio module to work with Windows",
+      "url": "https://github.com/567-labs/instructor/pull/1619"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1620,
+      "title": "feat(docs): improve SEO for asyncio and tenacity documentation",
+      "url": "https://github.com/567-labs/instructor/pull/1620"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1730,
+      "title": "Reorganize codebase from flat structure to modular architecture",
+      "url": "https://github.com/567-labs/instructor/pull/1730"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1731,
+      "title": "refactor: remove backward compatibility modules",
+      "url": "https://github.com/567-labs/instructor/pull/1731"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1763,
+      "title": "Fix GCS URI Support for PDF and Audio Classes",
+      "url": "https://github.com/567-labs/instructor/pull/1763"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1788,
+      "title": "feat: Enhanced Google Cloud Storage Support for Multimodal Classes",
+      "url": "https://github.com/567-labs/instructor/pull/1788"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1797,
+      "title": "Restore multimodal import compatibility",
+      "url": "https://github.com/567-labs/instructor/pull/1797"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1866,
+      "title": "fix: Python 3.13 compatibility and import path corrections",
+      "url": "https://github.com/567-labs/instructor/pull/1866"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1886,
+      "title": "Fix/ci uv migration",
+      "url": "https://github.com/567-labs/instructor/pull/1886"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1897,
+      "title": "Audit and standardize exception handling in instructor library",
+      "url": "https://github.com/567-labs/instructor/pull/1897"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1936,
+      "title": "Feature/bedrock document support",
+      "url": "https://github.com/567-labs/instructor/pull/1936"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2007,
+      "title": "GenAI SafetySettings image content",
+      "url": "https://github.com/567-labs/instructor/pull/2007"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2028,
+      "title": "docs: gate example execution and format code blocks",
+      "url": "https://github.com/567-labs/instructor/pull/2028"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2060,
+      "title": "[codex] docs+examples split from mode-registry refactor",
+      "url": "https://github.com/567-labs/instructor/pull/2060"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2231,
+      "title": "staging: v1.15.0 release candidate",
+      "url": "https://github.com/567-labs/instructor/pull/2231"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2259,
+      "title": "fix(templating): skip non-text Parts in GENAI/VertexAI mode",
+      "url": "https://github.com/567-labs/instructor/pull/2259"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2340,
+      "title": "fix(v2): consolidate minor runtime fixes",
+      "url": "https://github.com/567-labs/instructor/pull/2340"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2349,
+      "title": "ci: replace ai labeler with oss triage workflows",
+      "url": "https://github.com/567-labs/instructor/pull/2349"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2398,
+      "title": "[codex] consolidate latest fixes and docs",
+      "url": "https://github.com/567-labs/instructor/pull/2398"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2400,
+      "title": "[codex] consolidate docs and audio validation fixes",
+      "url": "https://github.com/567-labs/instructor/pull/2400"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2432,
+      "title": "test(coverage): reach 100 percent project coverage",
+      "url": "https://github.com/567-labs/instructor/pull/2432"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2510,
+      "title": "fix: finalize 1.15.5 correctness consolidation",
+      "url": "https://github.com/567-labs/instructor/pull/2510"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2564,
+      "title": "fix(core): consolidate 1.16.1 reliability fixes",
+      "url": "https://github.com/567-labs/instructor/pull/2564"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2569,
+      "title": "fix(security): harden remote media fetching",
+      "url": "https://github.com/567-labs/instructor/pull/2569"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2623,
+      "title": "test(providers): expose CI evidence and add Responses wire contracts",
+      "url": "https://github.com/567-labs/instructor/pull/2623"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2785,
+      "title": "docs(anthropic): fix PdfWithCacheControl \u2192 PDFWithCacheControl",
+      "url": "https://github.com/567-labs/instructor/pull/2785"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2898,
+      "title": "fix(multimodal): handle long Base64 PDFs through Bedrock conversion",
+      "url": "https://github.com/567-labs/instructor/pull/2898"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2909,
+      "title": "fix(multimodal): normalize MIME types and parameterized data URIs",
+      "url": "https://github.com/567-labs/instructor/pull/2909"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2915,
+      "title": "fix(multimodal): preserve media fallbacks and tool-call turns",
+      "url": "https://github.com/567-labs/instructor/pull/2915"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 2976,
+      "title": "docs: fix compatability typo in Gemini multimodal tests",
+      "url": "https://github.com/567-labs/instructor/pull/2976"
+    },
+    {
+      "kind": "open-pr",
+      "number": 3056,
+      "title": "fix: 1.18 community batch (CLI, batch, token limits, providers, DSL)",
+      "url": "https://github.com/567-labs/instructor/pull/3056"
+    }
+  ]
+}

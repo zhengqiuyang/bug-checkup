@@ -1,8 +1,8 @@
-probes: memory-tool stream integration and continuation rounds
+collide: file-precise verdicts; probe --env
 
-MemoryToolStreamFilter sits between the upstream SSE stream and the client. Ten
-assertions now cover it end to end: hidden blocks, contiguous indices, assembled
-input, end_turn for hidden-only tool rounds, bytewise parity, overflow safety,
-hold/release, continuation offsets, usage aggregation and passthrough.
+A keyword hit on an open PR is only a duplicate when that PR modifies one of the target
+files, so broad batch PRs no longer block unrelated work. Verified on instructor: #3056
+matches "multimodal" but does not touch the Anthropic encoder, verdict CLEAR + related.
 
-All PASS. context_guard.py is excluded: open PR #4307 already touches it.
+`run.py probe --env KEY=VALUE` lets probes import the audited package without exporting
+variables globally. Adds six instructor probes and their results.

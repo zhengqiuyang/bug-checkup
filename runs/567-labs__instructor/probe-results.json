@@ -1,0 +1,48 @@
+{
+  "python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
+  "cwd": "D:\\projects\\instructor",
+  "results": [
+    {
+      "probe": "probe_cache_contract.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: LRU order/eviction, thread safety, key determinism and sensitivity, value canonicalization"
+    },
+    {
+      "probe": "probe_iterable_scanner.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: chunk equivalence, brace/escape handling, envelope unwrap, incomplete-tail detection"
+    },
+    {
+      "probe": "probe_multimodal_conversions.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: anthropic/openai round-trips, responses shapes, idempotence, pdf, missing-data handling"
+    },
+    {
+      "probe": "probe_partial_fuzz.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 7 model shapes x 6 chunkings, 423 truncations, monotone strings"
+    },
+    {
+      "probe": "probe_partial_streaming.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "PASS: 183 prefixes, bytewise delivery, completeness, monotonicity, control-char repair"
+    },
+    {
+      "probe": "probe_registry_consistency.py",
+      "claim": null,
+      "exit_code": 0,
+      "verdict": "PASS",
+      "output": "bes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.FIREWORKS_JSON is deprecated and will be removed in v3.0. Use Mode.MD_JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.CEREBRAS_TOOLS is deprecated and will be removed in v3.0. Use Mode.TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.CEREBRAS_JSON is deprecated and will be removed in v3.0. Use Mode.MD_JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.WRITER_TOOLS is deprecated and will be removed in v3.0. Use Mode.TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.WRITER_JSON is deprecated and will be removed in v3.0. Use Mode.MD_JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.BEDROCK_TOOLS is deprecated and will be removed in v3.0. Use Mode.TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.BEDROCK_JSON is deprecated and will be removed in v3.0. Use Mode.MD_JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.VERTEXAI_TOOLS is deprecated and will be removed in v3.0. Use Mode.TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.VERTEXAI_JSON is deprecated and will be removed in v3.0. Use Mode.MD_JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.VERTEXAI_PARALLEL_TOOLS is deprecated and will be removed in v3.0. Use Mode.PARALLEL_TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.AZURE_TOOLS is deprecated and will be removed in v3.0. Use Mode.TOOLS instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)\nD:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\probe_registry_consistency.py:64: DeprecationWarning: Mode.AZURE_JSON is deprecated and will be removed in v3.0. Use Mode.JSON instead. The provider is determined by the client (from_openai, from_anthropic, etc.), not by the mode.\n  target = normalize_mode(provider, legacy)"
+    }
+  ]
+}
