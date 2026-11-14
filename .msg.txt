@@ -1,5 +1,0 @@
-diff: forwarded-policy baseline (common surface identical, new API added)
-
-18 X-Forwarded-For attribution cases run through the 0.44.0 wheel and the current source.
-parse_cidr_list / normalize_ip / peer_is_trusted_gateway / header_first agree on every case;
-header_client exists only on main, so it is an API addition rather than a behavior change.

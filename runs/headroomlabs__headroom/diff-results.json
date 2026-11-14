@@ -1,11 +1,11 @@
 {
-  "scenario": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\scenario_forwarded_policy.py",
-  "inputs": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\inputs_forwarded.jsonl",
+  "scenario": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\scenario_request_shaping.py",
+  "inputs": "D:\\projects\\bug-checkup\\runs\\headroomlabs__headroom\\scenarios\\inputs_shaping.jsonl",
   "old_python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
   "new_python": "D:\\projects\\headroom\\.venv\\Scripts\\python.exe",
   "lines": {
-    "old": 18,
-    "new": 18
+    "old": 8,
+    "new": 8
   },
   "different": 0,
   "differences": []

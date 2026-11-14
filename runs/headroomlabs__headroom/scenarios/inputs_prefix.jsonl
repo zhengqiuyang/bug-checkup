@@ -1,0 +1,14 @@
+{"payload": [{"role": "user", "content": [{"type": "text", "text": "hi", "cache_control": {"type": "ephemeral"}}]}]}
+{"payload": [{"role": "user", "content": [{"type": "text", "text": "hi"}]}]}
+{"payload": [{"role": "user", "content": [{"type": "tool_result", "content": "x", "cache_control": {"type": "ephemeral"}}]}]}
+{"payload": [{"role": "user", "content": "plain", "cache_control": {"type": "ephemeral"}}]}
+{"payload": [{"role": "user", "content": [{"text": "key-order-b", "type": "text"}, {"type": "text", "text": "key-order-a"}]}]}
+{"payload": [{"role": "user", "content": [{"type": "text", "text": "中文 😀"}]}]}
+{"payload": [{"role": "user", "content": null}]}
+{"payload": [{"role": "user", "content": ""}]}
+{"payload": {"messages": [{"role": "user", "content": [{"type": "text", "text": "hi", "cache_control": {"type": "ephemeral"}}]}], "model": "x"}}
+{"payload": {"b": 1, "a": 2}}
+{"payload": [{"role": "assistant", "tool_calls": [{"id": "1", "function": {"name": "f", "arguments": "{}"}, "cache_control": {"type": "ephemeral"}}]}]}
+{"payload": [{"role": "user", "content": [{"type": "text", "text": "x", "cache_control": null}]}]}
+{"payload": []}
+{"payload": null}
