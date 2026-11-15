@@ -280,6 +280,43 @@ def _probe_claim(probe: Path) -> str | None:
     match = re.search(r'^CLAIM\s*=\s*["\'](c-\d+)["\']', text, re.MULTILINE)
     return match.group(1) if match else None
 
+def _pip_venv(name: str, package: str, version: str, python_version: str) -> str:
+    """Create (or reuse) a venv with ``package==version`` and return its interpreter.
+
+    This is how a differential run gets a released baseline without manual setup: uv
+    installs the published wheel, the scenario runs against it, and the candidate source
+    stays on PYTHONPATH.
+    """
+    import shutil as _shutil
+
+    uv = _shutil.which("uv")
+    if uv is None:
+        raise RuntimeError("uv is not on PATH; install it or pass --old-python explicitly")
+    safe = f"{package.replace('/', '_')}-{version}".replace(":", "_")
+    base = run_dir(name) / f".diff-venv-{safe}"
+    python = base / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    if not python.exists():
+        subprocess.run([uv, "venv", str(base), "--python", python_version], check=True)
+        subprocess.run(
+            [uv, "pip", "install", "--python", str(python), f"{package}=={version}"],
+            check=True,
+        )
+    return str(python)
+
+
+def _prepare_diff_python(args: argparse.Namespace) -> str | None:
+    if not args.pip_version:
+        return args.old_python
+    if not args.pip_package:
+        print("--pip-version requires --pip-package (e.g. instructor)", file=sys.stderr)
+        return None
+    try:
+        return _pip_venv(args.name, args.pip_package, args.pip_version, args.pip_python)
+    except (RuntimeError, subprocess.CalledProcessError) as exc:
+        print(f"could not prepare the baseline venv: {exc}", file=sys.stderr)
+        return None
+
+
 
 def cmd_diff(args: argparse.Namespace) -> int:
     """Run one scenario against two environments and report where the outputs differ.
@@ -320,7 +357,10 @@ def cmd_diff(args: argparse.Namespace) -> int:
             return f"exit {completed.returncode}: {(completed.stderr or '').strip()[-800:]}"
         return [line for line in (completed.stdout or "").splitlines() if line.strip()]
 
-    old = run_env("old", args.old_python or sys.executable, args.old_env)
+    old_python = _prepare_diff_python(args)
+    if old_python is None:
+        return 2
+    old = run_env("old", old_python, args.old_env)
     new = run_env("new", args.new_python or sys.executable, args.new_env)
     if isinstance(old, str) or isinstance(new, str):
         print(f"scenario failed:\n  old: {old}\n  new: {new}", file=sys.stderr)
@@ -776,6 +816,154 @@ def cmd_collide(args: argparse.Namespace) -> int:
     if args.require_clear and (verdict != "CLEAR" or has_merged):
         return 1
     return 0
+def cmd_issues(args: argparse.Namespace) -> int:
+    """List open issues and mark the ones no PR or assignee has claimed.
+
+    An issue whose timeline has no cross-reference, no assignee and no comments is the only
+    shape worth starting: everything else already has someone attached. The check is
+    deliberately conservative -- a false "claimed" costs one skipped issue.
+    """
+    repo = args.repo
+    issues: list[dict] = []
+    page = 1
+    while len(issues) < args.limit:
+        batch = _gh_json("api", f"repos/{repo}/issues?state=open&per_page=100&page={page}") or []
+        if not isinstance(batch, list) or not batch:
+            break
+        issues.extend(item for item in batch if "pull_request" not in item)
+        if len(batch) < 100:
+            break
+        page += 1
+    if args.label:
+        wanted = args.label.lower()
+        issues = [
+            item for item in issues
+            if any(str(entry.get("name", "")).lower() == wanted for entry in item.get("labels", []))
+        ]
+    issues = issues[: args.limit]
+
+    rows = []
+    for issue in issues:
+        timeline = _gh_json(
+            "api", "-H", "Accept: application/vnd.github+json",
+            f"repos/{repo}/issues/{issue['number']}/timeline?per_page=100",
+        ) or []
+        refs = []
+        for event in timeline:
+            if not isinstance(event, dict) or event.get("event") != "cross-referenced":
+                continue
+            source = event.get("source", {}).get("issue", {})
+            if source.get("number"):
+                refs.append(
+                    {"number": source["number"], "state": source.get("state"), "title": source.get("title", "")}
+                )
+        open_refs = [ref for ref in refs if ref["state"] == "open"]
+        unclaimed = not refs and not issue.get("assignees") and issue["comments"] == 0
+        rows.append(
+            {
+                "number": issue["number"],
+                "title": issue["title"],
+                "created": (issue.get("created_at") or "")[:10],
+                "comments": issue["comments"],
+                "assignees": [person.get("login") for person in issue.get("assignees", [])],
+                "linked_prs": refs,
+                "open_linked_prs": open_refs,
+                "unclaimed": unclaimed,
+            }
+        )
+    rows.sort(key=lambda row: (not row["unclaimed"], row["created"]))
+
+    path = run_dir(args.name or repo.replace("/", "__"))
+    path.mkdir(parents=True, exist_ok=True)
+    out = path / "issues-results.json"
+    out.write_text(json.dumps({"repo": repo, "label": args.label, "rows": rows}, indent=2) + "\n", encoding="utf-8")
+
+    free = [row for row in rows if row["unclaimed"]]
+    print(f"{len(rows)} open issue(s), {len(free)} unclaimed -> {out}")
+    for row in rows[: args.show]:
+        state = "UNCLAIMED" if row["unclaimed"] else "claimed"
+        links = ",".join(f"#{ref['number']}" for ref in row["linked_prs"]) or "-"
+        print(f"  {state:9s} #{row['number']:<5d} {row['created']} links={links:12s} {row['title'][:70]}")
+    if free:
+        print("\nnext: collide each candidate before implementing, e.g.")
+        print(f"  python run.py collide {repo} --issue {free[0]['number']} --keyword \"<terms>\"")
+    return 0
+
+
+def cmd_gate(args: argparse.Namespace) -> int:
+    """One command that reads every artifact and decides whether a finding is ready.
+
+    Checks claims, probe verdicts, the red-to-green verification and the collision verdict.
+    Exit 0 only when nothing is failing; warnings (merged candidates, missing optional
+    artifacts) do not fail the gate unless the matching --require flag is set.
+    """
+    path = run_dir(args.name)
+    failures: list[str] = []
+    warnings: list[str] = []
+
+    claims_path = path / "claims.json"
+    if not claims_path.exists():
+        failures.append("claims.json is missing; run `claims`")
+    else:
+        claims = json.loads(claims_path.read_text(encoding="utf-8"))
+        if not claims:
+            warnings.append("claims.json is empty; the scanner found no contract")
+        print(f"claims            {len(claims):4d}")
+
+    probes_path = path / "probe-results.json"
+    if not probes_path.exists():
+        failures.append("probe-results.json is missing; run `probe`")
+    else:
+        results = json.loads(probes_path.read_text(encoding="utf-8")).get("results", [])
+        bad = [row["probe"] for row in results if row["verdict"] in {"FAIL", "CHECKER_BUG", "ERROR"}]
+        print(f"probes            {len(results):4d} ({len(bad)} failing)")
+        if bad:
+            failures.append(f"failing probes: {bad}")
+
+    verification_path = path / "verification.json"
+    if not verification_path.exists():
+        message = "verification.json is missing; run `baseline` before the fix and `verify` after"
+        (failures if args.require_verification else warnings).append(message)
+    else:
+        verification = json.loads(verification_path.read_text(encoding="utf-8"))
+        print(
+            f"verification      fixed={len(verification['fixed'])} "
+            f"still_failing={len(verification['still_failing'])} "
+            f"regressed={len(verification['regressed'])}"
+        )
+        if not verification["fixed"]:
+            failures.append("verification shows no red-to-green flip")
+        if verification["still_failing"]:
+            failures.append(f"still failing: {verification['still_failing']}")
+        if verification["regressed"]:
+            failures.append(f"regressed: {verification['regressed']}")
+
+    collision_path = path / "collision-results.json"
+    if not collision_path.exists():
+        message = "collision-results.json is missing; run `collide`"
+        (failures if args.require_collision else warnings).append(message)
+    else:
+        collision = json.loads(collision_path.read_text(encoding="utf-8"))
+        print(
+            f"collision         verdict={collision['verdict']} "
+            f"related={collision.get('related_open_prs')} merged={collision.get('merged_candidates')}"
+        )
+        if collision["verdict"] != "CLEAR":
+            failures.append(f"collision verdict is {collision['verdict']}")
+        if collision.get("merged_candidates"):
+            warnings.append("merged PRs matched the keywords; confirm the fix is not already in main")
+
+    for warning in warnings:
+        print(f"WARN {warning}")
+    for failure in failures:
+        print(f"FAIL {failure}")
+    if failures:
+        print(f"\ngate: FAIL ({len(failures)} blocking, {len(warnings)} warning) -> {path}")
+        return 1
+    print(f"\ngate: PASS ({len(warnings)} warning) -> {path}")
+    return 0
+
+
 
 def cmd_callsites(args: argparse.Namespace) -> int:
     """Report every production call site of a function and the options it never passes.
@@ -908,6 +1096,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_claims.add_argument("--include-tests", action="store_true")
     p_claims.set_defaults(func=cmd_claims)
 
+    p_gate = sub.add_parser("gate", help="check every artifact before presenting a finding")
+    p_gate.add_argument("name")
+    p_gate.add_argument("--require-verification", action="store_true")
+    p_gate.add_argument("--require-collision", action="store_true")
+    p_gate.set_defaults(func=cmd_gate)
+
     p_probe = sub.add_parser("probe", help="phase 2: run every probe and record verdicts")
     p_probe.add_argument("name")
     p_probe.add_argument("--python", help="interpreter that can import the audited repo")
@@ -940,10 +1134,21 @@ def build_parser() -> argparse.ArgumentParser:
     p_diff.add_argument("--new-python", help="interpreter for the candidate (default: current)")
     p_diff.add_argument("--cwd", help="working directory for the scenario")
     p_diff.add_argument("--timeout", type=int, default=600)
+    p_diff.add_argument("--pip-version", help="baseline version installed from PyPI into a temp venv")
+    p_diff.add_argument("--pip-package", help="PyPI package to install for --pip-version")
+    p_diff.add_argument("--pip-python", default="3.12", help="Python version for the baseline venv")
     p_diff.add_argument("--old-env", action="append", metavar="KEY=VALUE")
     p_diff.add_argument("--new-env", action="append", metavar="KEY=VALUE")
     p_diff.add_argument("--max-diffs", type=int, default=50)
     p_diff.set_defaults(func=cmd_diff)
+
+    p_issues = sub.add_parser("issues", help="list open issues and mark unclaimed ones")
+    p_issues.add_argument("repo", help="owner/name")
+    p_issues.add_argument("--name", help="run directory for issues-results.json")
+    p_issues.add_argument("--label", help="only issues with this label")
+    p_issues.add_argument("--limit", type=int, default=50)
+    p_issues.add_argument("--show", type=int, default=25)
+    p_issues.set_defaults(func=cmd_issues)
 
     p_col = sub.add_parser("collide", help="check linked/keyword/file collisions before writing code")
     p_col.add_argument("repo", help="owner/name")
@@ -984,7 +1189,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_new.add_argument("--out")
     p_new.set_defaults(func=cmd_new_probe)
 
-    for phase in ("gate", "shrink", "report"):
+    for phase in ("shrink", "report"):
         p = sub.add_parser(phase, help=f"phase: {phase}")
         p.add_argument("name")
         p.set_defaults(func=lambda _a, _p=phase: cmd_pending(_p))

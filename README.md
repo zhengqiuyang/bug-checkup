@@ -51,10 +51,10 @@ never invent a different shape.
 
 | Phase | Artifact | State |
 |---|---|---|
-| 0 gate | `gate.json` | interface frozen, implementation pending |
+| 0 gate | `issues-results.json`, `collision-results.json`, `verification.json` | **implemented** (`run.py issues`, `run.py collide`, `run.py gate`) |
 | 1 claims | `claims.json` | **implemented** (`claim_scan.py`; 12 families, package `__init__` reachability, docstring examples stripped) |
 | 2 probe | `probes/`, `probe-results.json` | **implemented** (`run.py probe`, `run.py new-probe`, `run.py autoprobe`, `run.py baseline`) |
-| 3 diff | `diff-results.json` | **implemented** (`run.py diff`, two environments) |
+| 3 diff | `diff-results.json` | **implemented** (`run.py diff`, two environments or `--pip-version`) |
 | 3 examples | `examples-results.json` | **implemented** (`run.py examples`) |
 | 3 shrink | `candidates.json` | interface frozen, implementation pending |
 | 4 trace | `findings.json` | interface frozen, implementation pending |

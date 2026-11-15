@@ -147,3 +147,17 @@ The claims scanner now covers twelve families: roundtrip, idempotence, determini
 bounds, error_contract and return_shape (tier A); preservation, exclusivity, ordering, passthrough
 and validation (tier B). Package `__init__.py` files resolve their importers under the package name,
 and code fences / doctest lines are stripped before matching so examples do not become claims.
+
+
+## Issue pool, released-baseline diff, and one-command gate
+
+`python run.py issues <owner/repo> [--label bug]` lists open issues with their linked PRs and marks
+the unclaimed ones (no cross-reference, no assignee, no comments).
+
+`python run.py diff <run> --pip-version 1.17.0 --pip-package instructor ...` creates or reuses a
+temp venv with the published release and runs the scenario against it, so the baseline needs no
+manual setup.
+
+`python run.py gate <run> [--require-verification] [--require-collision]` reads every artifact
+(claims, probe verdicts, verification, collision) and exits 0 only when nothing blocks. This is the
+single command to run before presenting a finding or opening a PR.

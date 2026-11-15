@@ -1,0 +1,582 @@
+{
+  "repo": "headroomlabs-ai/headroom",
+  "label": "bug",
+  "rows": [
+    {
+      "number": 4433,
+      "title": "[BUG] security-model.mdx says an unsafe x-headroom-base-url override is \"ignored\", but the proxy routes answer 400",
+      "created": "2026-10-22",
+      "comments": 6,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4660,
+          "state": "closed",
+          "title": "docs(security): describe the per-route outcome of an unsafe base-URL override"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4390,
+      "title": "[BUG] / [FEATURE] Model context limits wrong for 33 of 36 of 'OpenCode' and other models it provides (free and paid ones)",
+      "created": "2026-10-22",
+      "comments": 2,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4593,
+          "state": "closed",
+          "title": "fix(providers): isolate resolved Anthropic context limits"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4362,
+      "title": "[BUG] memory subsystem: ten correctness defects from one review pass (memory_list unroutable, vector-dim half-write, text_search TypeError, HNSW index never reloaded, stale vectors, id mismatch, dropped relation key, sync/export gaps, multimodal repr)",
+      "created": "2026-10-22",
+      "comments": 1,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4452,
+          "state": "open",
+          "title": "fix(memory): preserve the pre-import sync watermark"
+        },
+        {
+          "number": 4606,
+          "state": "closed",
+          "title": "fix(proxy): skip the memory-context search in cache mode"
+        },
+        {
+          "number": 4647,
+          "state": "closed",
+          "title": "fix(memory): read the relation key the memory_save schema advertises"
+        },
+        {
+          "number": 4648,
+          "state": "closed",
+          "title": "fix(memory): keep multimodal user content intact when injecting memories"
+        },
+        {
+          "number": 4649,
+          "state": "closed",
+          "title": "fix(memory): replace the HNSW vector when a memory is re-indexed"
+        },
+        {
+          "number": 4759,
+          "state": "open",
+          "title": "fix(memory): return stored id from a background DirectMem0 save"
+        },
+        {
+          "number": 4830,
+          "state": "open",
+          "title": "fix(memory): dispatch the advertised memory_list tool"
+        },
+        {
+          "number": 4831,
+          "state": "open",
+          "title": "fix(memory): validate embedding dimensions before writes"
+        },
+        {
+          "number": 4832,
+          "state": "open",
+          "title": "fix(memory): include older memories in agent sync"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4452,
+          "state": "open",
+          "title": "fix(memory): preserve the pre-import sync watermark"
+        },
+        {
+          "number": 4759,
+          "state": "open",
+          "title": "fix(memory): return stored id from a background DirectMem0 save"
+        },
+        {
+          "number": 4830,
+          "state": "open",
+          "title": "fix(memory): dispatch the advertised memory_list tool"
+        },
+        {
+          "number": 4831,
+          "state": "open",
+          "title": "fix(memory): validate embedding dimensions before writes"
+        },
+        {
+          "number": 4832,
+          "state": "open",
+          "title": "fix(memory): include older memories in agent sync"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4447,
+      "title": "[BUG] headroom mcp serve never loads the Kompress model \u2014 headroom_compress stays router:noop for the whole process lifetime (0.41.0, Windows)",
+      "created": "2026-10-23",
+      "comments": 4,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4456,
+          "state": "open",
+          "title": "fix(mcp): warm the Kompress model at startup so headroom_compress stops returning router:noop"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4456,
+          "state": "open",
+          "title": "fix(mcp): warm the Kompress model at startup so headroom_compress stops returning router:noop"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4520,
+      "title": "[BUG] Windows pre-commit mypy hook fails on POSIX-only os attributes on main",
+      "created": "2026-10-28",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4521,
+          "state": "closed",
+          "title": "fix(router): preserve read protection for quiet sed options"
+        },
+        {
+          "number": 4526,
+          "state": "closed",
+          "title": "[BUG] connect_private_sqlite re-opens SQLite sidecars: ENOENT refusals and lost fcntl locks"
+        },
+        {
+          "number": 4588,
+          "state": "open",
+          "title": "chore(mypy): type-check as Linux so the pre-commit hook passes on Windows"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4588,
+          "state": "open",
+          "title": "chore(mypy): type-check as Linux so the pre-commit hook passes on Windows"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4566,
+      "title": "SmartCrusher is 3-8x over its documented perf targets on the benchmark fixtures (O(n\u00b7clusters) simhash dedup)",
+      "created": "2026-10-29",
+      "comments": 1,
+      "assignees": [],
+      "linked_prs": [],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4613,
+      "title": "[BUG] Proxy leaks compression-executor threads (image OCR?), pinning cores.",
+      "created": "2026-11-02",
+      "comments": 6,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4723,
+          "state": "closed",
+          "title": "fix(proxy): turn off the image stage when --compressor leaves out image"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4757,
+      "title": "Scripted PR replies posted as 'System.Collections.Hashtable' (PR #4726): root cause and guardrails",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4760,
+          "state": "open",
+          "title": "docs: add guidance for scripted PR/issue comment posting"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4760,
+          "state": "open",
+          "title": "docs: add guidance for scripted PR/issue comment posting"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4746,
+      "title": "[BUG] OpenCode plugin: an empty or malformed proxy URL makes every outbound request in the host throw",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4750,
+          "state": "closed",
+          "title": "fix(opencode): do not break every request when the proxy URL is empty or invalid"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4745,
+      "title": "[BUG] OpenCode plugin: https.request(options) without a protocol is routed with an http:// upstream base URL",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4749,
+          "state": "closed",
+          "title": "fix(opencode): default options-form https.request calls to https"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4744,
+      "title": "[BUG] OpenCode plugin: spawn/fork/exec/execFile wrappers drop options or lose the callback when args or options is undefined or null",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4748,
+          "state": "closed",
+          "title": "fix(opencode): keep child process options when the args slot is null or undefined"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4740,
+      "title": "[BUG] TypeScript SDK SharedContext eviction: infinite loop at maxEntries 0, unrelated eviction on update, bound not held under concurrency",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4743,
+          "state": "closed",
+          "title": "fix(sdk): reject sharedcontext maxentries below 1"
+        },
+        {
+          "number": 4764,
+          "state": "open",
+          "title": "fix(sdk): preserve SharedContext capacity"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4764,
+          "state": "open",
+          "title": "fix(sdk): preserve SharedContext capacity"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4730,
+      "title": "[BUG] macos-launchagent example: port validator accepts invalid ports, declining reinstall leaves the service stopped, README names the wrong port variable",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4733,
+          "state": "closed",
+          "title": "fix(examples): validate the macos launchagent port as plain decimal"
+        },
+        {
+          "number": 4734,
+          "state": "closed",
+          "title": "fix(examples): keep the macos launchagent running when reinstall is declined"
+        },
+        {
+          "number": 4735,
+          "state": "closed",
+          "title": "docs(examples): name the port variable shell-integration.sh reads"
+        },
+        {
+          "number": 4827,
+          "state": "closed",
+          "title": "docs(wiki): align macos launchagent port variable with shell integration"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4729,
+      "title": "[BUG] Multi-block list-form tool_result is flattened with \"\", fusing the last line of one block with the first line of the next",
+      "created": "2026-11-10",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4739,
+          "state": "open",
+          "title": "fix(content-router): keep list-form tool_result text blocks on separate lines"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4739,
+          "state": "open",
+          "title": "fix(content-router): keep list-form tool_result text blocks on separate lines"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4794,
+      "title": "[BUG] require_loopback_or_container_gateway accepts other containers on the same Docker bridge (docstring says it rejects them)",
+      "created": "2026-11-11",
+      "comments": 2,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4433,
+          "state": "open",
+          "title": "[BUG] security-model.mdx says an unsafe x-headroom-base-url override is \"ignored\", but the proxy routes answer 400"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4433,
+          "state": "open",
+          "title": "[BUG] security-model.mdx says an unsafe x-headroom-base-url override is \"ignored\", but the proxy routes answer 400"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4792,
+      "title": "[BUG] The Copilot credential is attached to http:// and non-default-port requests to a Copilot host",
+      "created": "2026-11-11",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4793,
+          "state": "open",
+          "title": "fix(copilot): attach the operator's Copilot credential only over https on the default port"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4793,
+          "state": "open",
+          "title": "fix(copilot): attach the operator's Copilot credential only over https on the default port"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4789,
+      "title": "[BUG] The test suite uses the developer's real GitHub token, credential stores, ~/.headroom and the network",
+      "created": "2026-11-11",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4790,
+          "state": "open",
+          "title": "test: remove the developer's GitHub and Copilot tokens from every test's environment"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4790,
+          "state": "open",
+          "title": "test: remove the developer's GitHub and Copilot tokens from every test's environment"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4783,
+      "title": "[BUG] Several security-related tests cannot catch the defect they describe (loopback gating, rate-limit key, bypass header, CORS, upstream sweep, trust_remote_code scan, live marker)",
+      "created": "2026-11-11",
+      "comments": 2,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4784,
+          "state": "open",
+          "title": "test: make the loopback-gating tests able to tell the guard from a missing key"
+        },
+        {
+          "number": 4785,
+          "state": "open",
+          "title": "test: make the trust_remote_code scan see every truthy value and run without git"
+        },
+        {
+          "number": 4786,
+          "state": "open",
+          "title": "test: skip tests marked live by default"
+        },
+        {
+          "number": 4800,
+          "state": "open",
+          "title": "test(cli): assert the --learn/--no-learn warning text"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4784,
+          "state": "open",
+          "title": "test: make the loopback-gating tests able to tell the guard from a missing key"
+        },
+        {
+          "number": 4785,
+          "state": "open",
+          "title": "test: make the trust_remote_code scan see every truthy value and run without git"
+        },
+        {
+          "number": 4786,
+          "state": "open",
+          "title": "test: skip tests marked live by default"
+        },
+        {
+          "number": 4800,
+          "state": "open",
+          "title": "test(cli): assert the --learn/--no-learn warning text"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4782,
+      "title": "[BUG] tenant_key: distinct tenant IDs that differ only by punctuation, length past 64 or non-ASCII collapse into one TOIN pool, and the tests pin it",
+      "created": "2026-11-11",
+      "comments": 1,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4788,
+          "state": "open",
+          "title": "fix(proxy): stop distinct tenant ids from sharing one TOIN pool"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4788,
+          "state": "open",
+          "title": "fix(proxy): stop distinct tenant ids from sharing one TOIN pool"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4781,
+      "title": "[BUG] OpenCode plugin: after #4758 a POST to a non-LLM API with a bare /messages path (for example MessageBird) is still rerouted to the proxy",
+      "created": "2026-11-11",
+      "comments": 1,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4791,
+          "state": "open",
+          "title": "fix(opencode): stop routing a host's bare /messages or /responses to the proxy (#4781)"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4791,
+          "state": "open",
+          "title": "fix(opencode): stop routing a host's bare /messages or /responses to the proxy (#4781)"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4779,
+      "title": "[BUG] OpenCode plugin: a non-Latin-1 project name (Thai, Chinese, Cyrillic) makes every routed request throw",
+      "created": "2026-11-11",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4780,
+          "state": "open",
+          "title": "fix(opencode): percent-encode the project name in x-headroom-project"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4780,
+          "state": "open",
+          "title": "fix(opencode): percent-encode the project name in x-headroom-project"
+        }
+      ],
+      "unclaimed": false
+    },
+    {
+      "number": 4801,
+      "title": "[BUG] Subscription `toin_read_only` is still not honoured by the Kompress CCR store (the second path of #4474)",
+      "created": "2026-11-12",
+      "comments": 2,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4474,
+          "state": "closed",
+          "title": "[BUG] Subscription `toin_read_only` policy is not honoured on two TOIN write paths (router -> SmartCrusher.crush, and Kompress CCR store)"
+        }
+      ],
+      "open_linked_prs": [],
+      "unclaimed": false
+    },
+    {
+      "number": 4796,
+      "title": "[BUG] compress reuses a CCR marker after capacity eviction",
+      "created": "2026-11-12",
+      "comments": 0,
+      "assignees": [],
+      "linked_prs": [
+        {
+          "number": 4798,
+          "state": "open",
+          "title": "fix(router): drop cached results whose CCR markers were evicted (#4796)"
+        },
+        {
+          "number": 4872,
+          "state": "open",
+          "title": "fix(cache): invalidate cached CCR markers after store eviction"
+        }
+      ],
+      "open_linked_prs": [
+        {
+          "number": 4798,
+          "state": "open",
+          "title": "fix(router): drop cached results whose CCR markers were evicted (#4796)"
+        },
+        {
+          "number": 4872,
+          "state": "open",
+          "title": "fix(cache): invalidate cached CCR markers after store eviction"
+        }
+      ],
+      "unclaimed": false
+    }
+  ]
+}

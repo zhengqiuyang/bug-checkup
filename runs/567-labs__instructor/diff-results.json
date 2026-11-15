@@ -1,0 +1,23 @@
+{
+  "scenario": "D:\\projects\\bug-checkup\\runs\\567-labs__instructor\\scenarios\\scenario_image_convert.py",
+  "inputs": "D:\\projects\\bug-checkup\\runs\\567-labs__instructor\\scenarios\\inputs_image.jsonl",
+  "old_python": null,
+  "new_python": "D:\\projects\\instructor\\.venv\\Scripts\\python.exe",
+  "lines": {
+    "old": 3,
+    "new": 3
+  },
+  "different": 2,
+  "differences": [
+    {
+      "index": 0,
+      "old": "{\"data_present\": false, \"media_type\": \"image/png\"}",
+      "new": "{\"data_present\": true, \"media_type\": \"image/png\"}"
+    },
+    {
+      "index": 1,
+      "old": "{\"data_present\": false, \"media_type\": \"image/png\"}",
+      "new": "{\"error\": \"ValueError\", \"message\": \"Image data is missing for base64 encoding.\"}"
+    }
+  ]
+}

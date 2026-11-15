@@ -1,16 +1,10 @@
-claims recall + verify loop (v0.7.0)
+issues scan, released-baseline diff, one-command gate (v0.8.0)
 
-claims:
-- package __init__.py files resolve importers under the package name; this was why the
-  instructor scan returned zero claims (all its cache contracts live in cache/__init__.py)
-- five new families: error_contract, return_shape, ordering, passthrough, validation
-- docstring code fences and doctests are stripped, so examples cannot become claims
-- measured: instructor 0 -> 5 tier-A, headroom 199 -> 254 tier-A
-
-verify:
-- run.py baseline snapshots probe verdicts before a fix
-- run.py verify re-runs and writes verification.json with fixed / still_failing / regressed,
-  exits 0 only on a clean red-to-green flip
-- exercised on instructor: FAIL -> PASS, fixed: 1, exit 0
-
-selftest.py covers claim families, example stripping, package reachability and the verify delta.
+- run.py issues: lists open issues with linked PRs and marks the unclaimed ones
+  (no cross-reference, no assignee, no comments). Checked on headroom (23 bug issues,
+  all claimed) and instructor (0 open bug issues).
+- run.py diff --pip-version/--pip-package: installs the released baseline into a cached
+  temp venv and diffs the scenario against it. Instructor 1.17.0 vs fixed source: 2/3
+  inputs differ (data_present false -> true, or a clear ValueError).
+- run.py gate: reads claims, probe verdicts, verification and collision, and exits 0 only
+  when nothing blocks. Confirmed PASS on the instructor run with one merged-candidate warning.

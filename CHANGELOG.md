@@ -103,3 +103,15 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
 - `verify` is no longer a pending placeholder phase.
 - `selftest.py`: the tool tests itself (claim families, example stripping, package reachability,
   verify delta) without pytest, so changes to the scanner have their own red/green.
+
+
+## [0.8.0] - 2026-11-15
+
+- `run.py issues`: open-issue scan with linked-PR detection; marks unclaimed issues (no
+  cross-reference, no assignee, no comments). Validated on headroom (23 bug issues, all claimed)
+  and instructor (0 open bug issues).
+- `run.py diff --pip-version/--pip-package`: installs the released baseline into a reusable temp
+  venv, so a differential run needs no manual environment setup. Exercised on instructor 1.17.0 vs
+  the fixed source: 2 of 3 inputs differ (`data_present: false` -> `true` / clear `ValueError`).
+- `run.py gate`: one command that reads claims, probe verdicts, verification and collision and exits
+  0 only when nothing blocks. Confirmed on the instructor run: PASS with one merged-candidate warning.
