@@ -2,7 +2,9 @@
   "repo": "567-labs/instructor",
   "issue": null,
   "keywords": [
-    "multimodal"
+    "image_to_anthropic",
+    "image data missing",
+    "anthropic image data"
   ],
   "files": [
     "providers/anthropic/multimodal.py"
@@ -13,15 +15,81 @@
   "findings": [
     {
       "kind": "merged-pr",
+      "number": 154,
+      "title": "Add tutorials ",
+      "url": "https://github.com/567-labs/instructor/pull/154"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 288,
+      "title": "example: Table extraction w/ Pydantic",
+      "url": "https://github.com/567-labs/instructor/pull/288"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 293,
+      "title": "docs: example on Vision API (image to ad copy)",
+      "url": "https://github.com/567-labs/instructor/pull/293"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1045,
+      "title": "feat: support multimodal",
+      "url": "https://github.com/567-labs/instructor/pull/1045"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1070,
+      "title": "Feat: Enhance multimodality",
+      "url": "https://github.com/567-labs/instructor/pull/1070"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1236,
+      "title": "chore(deps): bump the poetry group across 1 directory with 24 updates",
+      "url": "https://github.com/567-labs/instructor/pull/1236"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1369,
+      "title": "Standardize docs with claude code",
+      "url": "https://github.com/567-labs/instructor/pull/1369"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1373,
+      "title": "feat: optimizations ",
+      "url": "https://github.com/567-labs/instructor/pull/1373"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1375,
+      "title": "feat: optimize message processing",
+      "url": "https://github.com/567-labs/instructor/pull/1375"
+    },
+    {
+      "kind": "merged-pr",
       "number": 1393,
       "title": "Adding support for the GenAI Sdk",
       "url": "https://github.com/567-labs/instructor/pull/1393"
     },
     {
       "kind": "merged-pr",
+      "number": 1404,
+      "title": "Add genai image supp",
+      "url": "https://github.com/567-labs/instructor/pull/1404"
+    },
+    {
+      "kind": "merged-pr",
       "number": 1440,
       "title": "Bugfix: [minor] Do not fail with google genai models if the content is longer then max file name. Closes #1439",
       "url": "https://github.com/567-labs/instructor/pull/1440"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1459,
+      "title": "feat: add mistral PDF support",
+      "url": "https://github.com/567-labs/instructor/pull/1459"
     },
     {
       "kind": "merged-pr",
@@ -40,6 +108,12 @@
       "number": 1465,
       "title": "Fix: resolve pyright issues with PDF",
       "url": "https://github.com/567-labs/instructor/pull/1465"
+    },
+    {
+      "kind": "merged-pr",
+      "number": 1477,
+      "title": "bunch of other typos in blog posts fixed",
+      "url": "https://github.com/567-labs/instructor/pull/1477"
     },
     {
       "kind": "merged-pr",
@@ -115,45 +189,9 @@
     },
     {
       "kind": "merged-pr",
-      "number": 2007,
-      "title": "GenAI SafetySettings image content",
-      "url": "https://github.com/567-labs/instructor/pull/2007"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2028,
-      "title": "docs: gate example execution and format code blocks",
-      "url": "https://github.com/567-labs/instructor/pull/2028"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2060,
-      "title": "[codex] docs+examples split from mode-registry refactor",
-      "url": "https://github.com/567-labs/instructor/pull/2060"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2231,
-      "title": "staging: v1.15.0 release candidate",
-      "url": "https://github.com/567-labs/instructor/pull/2231"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2259,
-      "title": "fix(templating): skip non-text Parts in GENAI/VertexAI mode",
-      "url": "https://github.com/567-labs/instructor/pull/2259"
-    },
-    {
-      "kind": "merged-pr",
       "number": 2340,
       "title": "fix(v2): consolidate minor runtime fixes",
       "url": "https://github.com/567-labs/instructor/pull/2340"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2349,
-      "title": "ci: replace ai labeler with oss triage workflows",
-      "url": "https://github.com/567-labs/instructor/pull/2349"
     },
     {
       "kind": "merged-pr",
@@ -169,33 +207,21 @@
     },
     {
       "kind": "merged-pr",
-      "number": 2432,
-      "title": "test(coverage): reach 100 percent project coverage",
-      "url": "https://github.com/567-labs/instructor/pull/2432"
+      "number": 2502,
+      "title": "fix(v2): consolidate release-readiness correctness fixes",
+      "url": "https://github.com/567-labs/instructor/pull/2502"
     },
     {
       "kind": "merged-pr",
-      "number": 2510,
-      "title": "fix: finalize 1.15.5 correctness consolidation",
-      "url": "https://github.com/567-labs/instructor/pull/2510"
+      "number": 2517,
+      "title": "chore(release): verify integrated 1.16 queue",
+      "url": "https://github.com/567-labs/instructor/pull/2517"
     },
     {
       "kind": "merged-pr",
-      "number": 2564,
-      "title": "fix(core): consolidate 1.16.1 reliability fixes",
-      "url": "https://github.com/567-labs/instructor/pull/2564"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2569,
-      "title": "fix(security): harden remote media fetching",
-      "url": "https://github.com/567-labs/instructor/pull/2569"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2623,
-      "title": "test(providers): expose CI evidence and add Responses wire contracts",
-      "url": "https://github.com/567-labs/instructor/pull/2623"
+      "number": 2620,
+      "title": "Audit provider usage accounting and preserve Anthropic thinking totals",
+      "url": "https://github.com/567-labs/instructor/pull/2620"
     },
     {
       "kind": "merged-pr",
@@ -204,34 +230,10 @@
       "url": "https://github.com/567-labs/instructor/pull/2785"
     },
     {
-      "kind": "merged-pr",
-      "number": 2898,
-      "title": "fix(multimodal): handle long Base64 PDFs through Bedrock conversion",
-      "url": "https://github.com/567-labs/instructor/pull/2898"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2909,
-      "title": "fix(multimodal): normalize MIME types and parameterized data URIs",
-      "url": "https://github.com/567-labs/instructor/pull/2909"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2915,
-      "title": "fix(multimodal): preserve media fallbacks and tool-call turns",
-      "url": "https://github.com/567-labs/instructor/pull/2915"
-    },
-    {
-      "kind": "merged-pr",
-      "number": 2976,
-      "title": "docs: fix compatability typo in Gemini multimodal tests",
-      "url": "https://github.com/567-labs/instructor/pull/2976"
-    },
-    {
       "kind": "open-pr",
-      "number": 3056,
-      "title": "fix: 1.18 community batch (CLI, batch, token limits, providers, DSL)",
-      "url": "https://github.com/567-labs/instructor/pull/3056"
+      "number": 3039,
+      "title": "build(deps): bump the poetry group across 1 directory with 10 updates",
+      "url": "https://github.com/567-labs/instructor/pull/3039"
     }
   ]
 }

@@ -1,1 +1,93 @@
-[]
+[
+  {
+    "id": "c-0001",
+    "kind": "concurrency",
+    "tier": "A",
+    "text": "Concrete subclasses *must* be thread-safe.",
+    "source": "D:\\projects\\instructor\\instructor\\cache\\__init__.py",
+    "line": 43,
+    "symbol": "BaseCache",
+    "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "auto_client.py",
+      "cache_response.py",
+      "partial.py",
+      "patch.py"
+    ],
+    "probe": "prop-concurrency"
+  },
+  {
+    "id": "c-0002",
+    "kind": "concurrency",
+    "tier": "A",
+    "text": "Thread-safe in-process LRU cache using :class:`collections.OrderedDict`.",
+    "source": "D:\\projects\\instructor\\instructor\\cache\\__init__.py",
+    "line": 67,
+    "symbol": "AutoCache",
+    "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "auto_client.py",
+      "cache_response.py",
+      "partial.py",
+      "patch.py"
+    ],
+    "probe": "prop-concurrency"
+  },
+  {
+    "id": "c-0003",
+    "kind": "concurrency",
+    "tier": "A",
+    "text": "Persistent, thread-safe storage for strings, bytes, and JSON values.",
+    "source": "D:\\projects\\instructor\\instructor\\cache\\__init__.py",
+    "line": 123,
+    "symbol": "DiskCache",
+    "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "auto_client.py",
+      "cache_response.py",
+      "partial.py",
+      "patch.py"
+    ],
+    "probe": "prop-concurrency"
+  },
+  {
+    "id": "c-0004",
+    "kind": "determinism",
+    "tier": "A",
+    "text": "Compute a *deterministic* cache key.",
+    "source": "D:\\projects\\instructor\\instructor\\cache\\__init__.py",
+    "line": 201,
+    "symbol": "make_cache_key",
+    "visibility": "public",
+    "reachable": true,
+    "importers": [
+      "auto_client.py",
+      "cache_response.py",
+      "partial.py",
+      "patch.py"
+    ],
+    "probe": "prop-deterministic"
+  },
+  {
+    "id": "c-0005",
+    "kind": "error_contract",
+    "tier": "A",
+    "text": "The legacy SDK raises ValueError for blocked or empty candidates.",
+    "source": "D:\\projects\\instructor\\instructor\\v2\\providers\\gemini\\handlers.py",
+    "line": 38,
+    "symbol": "_response_text",
+    "visibility": "docs",
+    "reachable": true,
+    "importers": [
+      "__init__.py",
+      "client.py",
+      "handlers.py",
+      "request.py",
+      "utils.py"
+    ],
+    "probe": "prop-error-contract"
+  }
+]

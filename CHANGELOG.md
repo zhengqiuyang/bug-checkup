@@ -87,3 +87,19 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
   a probe that never transforms an input reports INCONCLUSIVE.
 - First run on headroom's transforms: 2 pairs (`collapse_runs`/`expand_runs`,
   `fold_repeated_blocks`/`unfold_repeated_blocks`) -> PASS.
+
+
+## [0.7.0] - 2026-11-15
+
+- Claim recall: five new families (`error_contract`, `return_shape`, ordering, passthrough,
+  validation), package `__init__.py` files now resolve importers under their package name (this was
+  why the instructor scan returned zero claims), and docstring code fences / doctests are stripped
+  so examples cannot be mistaken for contracts. Measured: instructor 0 -> 5 tier-A, headroom
+  199 -> 254 tier-A.
+- `run.py baseline` + `run.py verify`: automated red-to-green loop. `baseline` snapshots probe
+  verdicts before a fix; `verify` re-runs and writes `verification.json` with `fixed`,
+  `still_failing`, `regressed` and exits 0 only on a clean flip. Exercised on instructor: FAIL ->
+  PASS, `fixed: 1`, exit 0.
+- `verify` is no longer a pending placeholder phase.
+- `selftest.py`: the tool tests itself (claim families, example stripping, package reachability,
+  verify delta) without pytest, so changes to the scanner have their own red/green.

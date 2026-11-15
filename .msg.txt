@@ -1,8 +1,16 @@
-collide: file-precise verdicts; probe --env
+claims recall + verify loop (v0.7.0)
 
-A keyword hit on an open PR is only a duplicate when that PR modifies one of the target
-files, so broad batch PRs no longer block unrelated work. Verified on instructor: #3056
-matches "multimodal" but does not touch the Anthropic encoder, verdict CLEAR + related.
+claims:
+- package __init__.py files resolve importers under the package name; this was why the
+  instructor scan returned zero claims (all its cache contracts live in cache/__init__.py)
+- five new families: error_contract, return_shape, ordering, passthrough, validation
+- docstring code fences and doctests are stripped, so examples cannot become claims
+- measured: instructor 0 -> 5 tier-A, headroom 199 -> 254 tier-A
 
-`run.py probe --env KEY=VALUE` lets probes import the audited package without exporting
-variables globally. Adds six instructor probes and their results.
+verify:
+- run.py baseline snapshots probe verdicts before a fix
+- run.py verify re-runs and writes verification.json with fixed / still_failing / regressed,
+  exits 0 only on a clean red-to-green flip
+- exercised on instructor: FAIL -> PASS, fixed: 1, exit 0
+
+selftest.py covers claim families, example stripping, package reachability and the verify delta.

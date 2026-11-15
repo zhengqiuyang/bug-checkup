@@ -98,30 +98,26 @@ def cmd_claims(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_probe(args: argparse.Namespace) -> int:
-    """Execute every probe under runs/<name>/probes and record the verdicts.
-
-    Generic by construction: a probe is any ``.py`` file that exits 0/1/2/3. The tool
-    does not import it, does not know the language of the audited repo, and does not
-    assume what a claim is about — it records what the probe printed.
-    """
+def _probe_plan(args: argparse.Namespace) -> tuple[list[Path], str, Path, dict[str, str]] | None:
+    """Resolve probes, interpreter, cwd and environment for a probe run."""
     path = run_dir(args.name)
     probes_dir = path / "probes"
     if not probes_dir.exists():
         print(f"no probes/ under {path}", file=sys.stderr)
-        return 2
-
+        return None
     probes = sorted(probes_dir.glob("*.py"))
-    if not probes:
-        print(f"no probe scripts under {probes_dir}")
-        return 0
-
     python = args.python or sys.executable
     cwd = Path(args.cwd).resolve() if args.cwd else path
     env = dict(os.environ)
     for pair in args.env or []:
         key, _, value = pair.partition("=")
         env[key] = value
+    return probes, python, cwd, env
+
+
+def _run_probes(
+    probes: list[Path], python: str, cwd: Path, env: dict[str, str], timeout: int
+) -> list[dict]:
     results = []
     for probe in probes:
         claim = _probe_claim(probe)
@@ -134,13 +130,13 @@ def cmd_probe(args: argparse.Namespace) -> int:
                 text=True,
                 encoding="utf-8",
                 errors="replace",
-                timeout=args.timeout,
+                timeout=timeout,
             )
             code = completed.returncode
             output = (completed.stdout or "") + (completed.stderr or "")
         except subprocess.TimeoutExpired:
             code = -1
-            output = f"timeout after {args.timeout}s"
+            output = f"timeout after {timeout}s"
         verdict = VERDICTS.get(code, f"ERROR({code})")
         results.append(
             {
@@ -152,7 +148,25 @@ def cmd_probe(args: argparse.Namespace) -> int:
             }
         )
         print(f"{verdict:12s} {probe.name}")
+    return results
 
+
+def cmd_probe(args: argparse.Namespace) -> int:
+    """Execute every probe under runs/<name>/probes and record the verdicts.
+
+    Generic by construction: a probe is any ``.py`` file that exits 0/1/2/3. The tool
+    does not import it, does not know the language of the audited repo, and does not
+    assume what a claim is about — it records what the probe printed.
+    """
+    plan = _probe_plan(args)
+    if plan is None:
+        return 2
+    probes, python, cwd, env = plan
+    if not probes:
+        print(f"no probe scripts under {run_dir(args.name) / 'probes'}")
+        return 0
+    results = _run_probes(probes, python, cwd, env, args.timeout)
+    path = run_dir(args.name)
     (path / "probe-results.json").write_text(
         json.dumps({"python": python, "cwd": str(cwd), "results": results}, indent=2) + "\n",
         encoding="utf-8",
@@ -160,6 +174,98 @@ def cmd_probe(args: argparse.Namespace) -> int:
     failures = sum(1 for r in results if r["verdict"] in {"FAIL", "CHECKER_BUG", "ERROR"})
     print(f"\n{len(results)} probes, {failures} needing attention -> {path / 'probe-results.json'}")
     return 0
+
+
+def cmd_baseline(args: argparse.Namespace) -> int:
+    """Snapshot the current probe verdicts as the pre-fix baseline."""
+    plan = _probe_plan(args)
+    if plan is None:
+        return 2
+    probes, python, cwd, env = plan
+    if not probes:
+        print("no probes to baseline", file=sys.stderr)
+        return 2
+    results = _run_probes(probes, python, cwd, env, args.timeout)
+    path = run_dir(args.name)
+    (path / "probe-baseline.json").write_text(
+        json.dumps({"python": python, "cwd": str(cwd), "results": results}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    failing = [r["probe"] for r in results if r["verdict"] in {"FAIL", "CHECKER_BUG"}]
+    print(f"\nbaseline: {len(results)} probes, {len(failing)} failing -> {path / 'probe-baseline.json'}")
+    return 0
+
+
+def _compare_verdicts(baseline: dict, results: list[dict]) -> dict:
+    """Pure before/after comparison used by `verify` (and self-tested)."""
+    before = {row["probe"]: row for row in baseline.get("results", [])}
+    after = {row["probe"]: row for row in results}
+    fixed, still_failing, regressed, new = [], [], [], []
+    for name, row in after.items():
+        old = before.get(name)
+        if old is None:
+            new.append(name)
+            continue
+        was_bad = old["verdict"] in {"FAIL", "CHECKER_BUG", "ERROR"}
+        is_good = row["verdict"] == "PASS"
+        if was_bad and is_good:
+            fixed.append(name)
+        elif was_bad and not is_good:
+            still_failing.append(name)
+        elif not was_bad and not is_good:
+            regressed.append(name)
+    return {
+        "fixed": fixed,
+        "still_failing": still_failing,
+        "regressed": regressed,
+        "new_probes": new,
+        "before": {name: row["verdict"] for name, row in before.items()},
+        "after": {name: row["verdict"] for name, row in after.items()},
+    }
+
+
+def cmd_verify(args: argparse.Namespace) -> int:
+    """Re-run probes and compare with the baseline: the automated red-to-green loop.
+
+    Exits 0 only when at least one previously failing probe now passes, nothing that passed
+    before fails now, and no previously failing probe still fails.
+    """
+    path = run_dir(args.name)
+    baseline_path = path / "probe-baseline.json"
+    if not baseline_path.exists():
+        print(f"no baseline at {baseline_path}; run `baseline` before the fix", file=sys.stderr)
+        return 2
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    plan = _probe_plan(args)
+    if plan is None:
+        return 2
+    probes, python, cwd, env = plan
+    results = _run_probes(probes, python, cwd, env, args.timeout)
+
+    verification = _compare_verdicts(baseline, results)
+    before = {row["probe"]: row for row in baseline.get("results", [])}
+    after = {row["probe"]: row for row in results}
+    fixed = verification["fixed"]
+    still_failing = verification["still_failing"]
+    regressed = verification["regressed"]
+    new = verification["new_probes"]
+    (path / "verification.json").write_text(json.dumps(verification, indent=2) + "\n", encoding="utf-8")
+
+    print(f"\nfixed (red -> green): {len(fixed)}")
+    for name in fixed:
+        print(f"  {before[name]['verdict']} -> PASS  {name}")
+        print(f"    before: {before[name]['output'].strip().splitlines()[-1][:160]}")
+        print(f"    after : {after[name]['output'].strip().splitlines()[-1][:160]}")
+    if still_failing:
+        print(f"still failing: {still_failing}")
+    if regressed:
+        print(f"REGRESSED: {regressed}")
+    if new:
+        print(f"new probes (not in baseline): {new}")
+    print(f"artifact: {path / 'verification.json'}")
+
+    ok = bool(fixed) and not still_failing and not regressed
+    return 0 if ok else 1
 
 
 VERDICTS = {0: "PASS", 1: "FAIL", 2: "INCONCLUSIVE", 3: "CHECKER_BUG"}
@@ -810,6 +916,22 @@ def build_parser() -> argparse.ArgumentParser:
     p_probe.add_argument("--env", action="append", metavar="KEY=VALUE")
     p_probe.set_defaults(func=cmd_probe)
 
+    p_base = sub.add_parser("baseline", help="snapshot current probe verdicts before a fix")
+    p_base.add_argument("name")
+    p_base.add_argument("--python")
+    p_base.add_argument("--cwd")
+    p_base.add_argument("--timeout", type=int, default=300)
+    p_base.add_argument("--env", action="append", metavar="KEY=VALUE")
+    p_base.set_defaults(func=cmd_baseline)
+
+    p_verify = sub.add_parser("verify", help="re-run probes and report the red-to-green delta")
+    p_verify.add_argument("name")
+    p_verify.add_argument("--python")
+    p_verify.add_argument("--cwd")
+    p_verify.add_argument("--timeout", type=int, default=300)
+    p_verify.add_argument("--env", action="append", metavar="KEY=VALUE")
+    p_verify.set_defaults(func=cmd_verify)
+
     p_diff = sub.add_parser("diff", help="run a scenario against two versions and diff the output")
     p_diff.add_argument("name")
     p_diff.add_argument("--scenario", required=True, help="script: JSONL on stdin -> JSONL on stdout")
@@ -862,7 +984,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_new.add_argument("--out")
     p_new.set_defaults(func=cmd_new_probe)
 
-    for phase in ("gate", "shrink", "verify", "report"):
+    for phase in ("gate", "shrink", "report"):
         p = sub.add_parser(phase, help=f"phase: {phase}")
         p.add_argument("name")
         p.set_defaults(func=lambda _a, _p=phase: cmd_pending(_p))

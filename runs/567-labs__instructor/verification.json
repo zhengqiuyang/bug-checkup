@@ -1,0 +1,24 @@
+{
+  "fixed": [
+    "probe_multimodal_conversions.py"
+  ],
+  "still_failing": [],
+  "regressed": [],
+  "new_probes": [],
+  "before": {
+    "probe_cache_contract.py": "PASS",
+    "probe_iterable_scanner.py": "PASS",
+    "probe_multimodal_conversions.py": "FAIL",
+    "probe_partial_fuzz.py": "PASS",
+    "probe_partial_streaming.py": "PASS",
+    "probe_registry_consistency.py": "PASS"
+  },
+  "after": {
+    "probe_cache_contract.py": "PASS",
+    "probe_iterable_scanner.py": "PASS",
+    "probe_multimodal_conversions.py": "PASS",
+    "probe_partial_fuzz.py": "PASS",
+    "probe_partial_streaming.py": "PASS",
+    "probe_registry_consistency.py": "PASS"
+  }
+}

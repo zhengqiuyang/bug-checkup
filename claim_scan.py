@@ -59,6 +59,38 @@ FAMILIES: dict[str, tuple[re.Pattern[str], str]] = {
         re.compile(r"\b(at most|no (more|larger) than|bounded by|upper[- ]bound|within the limit)\b", re.I),
         "prop-bounds",
     ),
+    "error_contract": (
+        re.compile(
+            r"\b(must (raise|reject|fail)|raises? (a |an )?(ValueError|TypeError|KeyError|RuntimeError|"
+            r"NotImplementedError|error)|rejects? (invalid|unknown|unsupported|bad)|"
+            r"fails? (loudly|with|when|rather than))\b",
+            re.I,
+        ),
+        "prop-error-contract",
+    ),
+    "return_shape": (
+        re.compile(
+            r"\breturns? (the original|an empty|empty|None|the same|unchanged|the input)\b",
+            re.I,
+        ),
+        "prop-return-shape",
+    ),
+    "ordering": (
+        re.compile(
+            r"\b(must be called (before|after)|order(ing)? (matters|is preserved|is stable)|"
+            r"before .{0,20} is called|after .{0,20} returns)\b",
+            re.I,
+        ),
+        "prop-ordering",
+    ),
+    "passthrough": (
+        re.compile(r"\b(pass(ed)? through|forwarded as[- ]is|untouched|verbatim)\b", re.I),
+        "prop-passthrough",
+    ),
+    "validation": (
+        re.compile(r"\b(validat(e|es|ion)|rejects?|must not accept)\b", re.I),
+        "prop-validation",
+    ),
 }
 
 # A = strong, specific contract worth probing first; B = common vocabulary that needs a human
@@ -69,8 +101,13 @@ TIER: dict[str, str] = {
     "determinism": "A",
     "concurrency": "A",
     "bounds": "A",
+    "error_contract": "A",
+    "return_shape": "A",
     "preservation": "B",
     "exclusivity": "B",
+    "ordering": "B",
+    "passthrough": "B",
+    "validation": "B",
 }
 
 # A claim stated in the negative ("not idempotent", "never lossless") is not a claim of the
@@ -79,6 +116,9 @@ NEGATION = re.compile(r"\b(not|never|no|non|isn't|aren't|cannot|can't|without)\b
 
 SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
 WHITESPACE = re.compile(r"[ \t]+")
+# Docstrings carry runnable examples; prose inside them is not a claim about the code.
+CODE_FENCE = re.compile(r"```.*?```", re.S)
+DOCTEST = re.compile(r"^[ \t]*(>>>|\.\.\.).*$", re.M)
 
 
 @dataclass(frozen=True)
@@ -108,6 +148,7 @@ def _negated(sentence: str, match_start: int) -> bool:
 
 def _claims_in(text: str) -> list[tuple[str, str, int]]:
     """Return (kind, sentence, offset) for every non-negated claim in ``text``."""
+    text = DOCTEST.sub(" ", CODE_FENCE.sub(" ", text))
     found: list[tuple[str, str, int]] = []
     for sentence in _sentences(text):
         offset = text.find(sentence)
@@ -195,6 +236,11 @@ def _make(
     )
 
 
+def module_stem(path: Path) -> str:
+    """Import name a file provides: the package name for ``__init__.py``."""
+    return path.parent.name if path.name == "__init__.py" else path.stem
+
+
 def _import_stems(path: Path) -> set[str]:
     """Last component of every module this file imports (best effort, AST-based)."""
     try:
@@ -252,7 +298,7 @@ def scan(
                 continue
             if not include_tests and ("test" in path.name or "tests" in parts):
                 continue
-            importers = importers_by_stem.get(path.stem, []) if path.suffix == ".py" else []
+            importers = importers_by_stem.get(module_stem(path), []) if path.suffix == ".py" else []
             claims.extend(
                 scan_python(path, importers) if path.suffix == ".py" else scan_markdown(path, importers)
             )

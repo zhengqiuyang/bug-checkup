@@ -133,3 +133,17 @@ single required argument. It scaffolds a probe that calls f then g and asserts t
 back, using an input corpus built to make compression engage (long runs, repeated stanzas, arrays of
 repeated items, unicode, empty and padded text). A probe that never changes an input is
 INCONCLUSIVE, not PASS.
+
+
+## Red-to-green loop
+
+`python run.py baseline <run> ...` snapshots the current probe verdicts (run it with the defect
+present). After the fix, `python run.py verify <run> ...` re-runs every probe, compares with the
+baseline, writes `verification.json`, and exits 0 only when something went red -> green, nothing
+regressed, and no previously failing probe still fails. Both take the same `--python`, `--cwd` and
+`--env` as `probe`.
+
+The claims scanner now covers twelve families: roundtrip, idempotence, determinism, concurrency,
+bounds, error_contract and return_shape (tier A); preservation, exclusivity, ordering, passthrough
+and validation (tier B). Package `__init__.py` files resolve their importers under the package name,
+and code fences / doctest lines are stripped before matching so examples do not become claims.
