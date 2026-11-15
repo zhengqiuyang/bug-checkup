@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="bug-checkup">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="55%" stop-color="#151129"/>
+      <stop offset="100%" stop-color="#1d0f2e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.18" r="0.55">
+      <stop offset="0%" stop-color="#3ddc97" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#3ddc97" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="320" fill="url(#bg)"/>
+  <rect width="1280" height="320" fill="url(#grid)"/>
+  <rect width="1280" height="320" fill="url(#glow)"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <text x="80" y="126" font-size="60" font-weight="700" fill="#e6edf3" letter-spacing="-1">bug-checkup</text>
+    <rect x="80" y="150" width="196" height="4" rx="2" fill="#3ddc97"/>
+    <text x="80" y="196" font-size="21" fill="#9aa4b2">find the bugs where code breaks its own promise</text>
+    <text x="80" y="232" font-size="16" fill="#6b7684">contracts → probes → red/green → minimal repro</text>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">
+    <rect x="760" y="86" width="440" height="150" rx="12" fill="#0d1117" stroke="#2b3440"/>
+    <circle cx="786" cy="110" r="5" fill="#ff5f56"/>
+    <circle cx="804" cy="110" r="5" fill="#ffbd2e"/>
+    <circle cx="822" cy="110" r="5" fill="#27c93f"/>
+    <text x="786" y="146" fill="#8b949e">$ python run.py gate 567-labs__instructor</text>
+    <text x="786" y="172" fill="#3ddc97">verification   fixed=1  regressed=0</text>
+    <text x="786" y="196" fill="#3ddc97">shrunk 360 -&gt; 32 bytes</text>
+    <text x="786" y="220" fill="#e6edf3">gate: PASS</text>
+  </g>
+</svg>
