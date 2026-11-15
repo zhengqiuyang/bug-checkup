@@ -1,10 +1,5 @@
-issues scan, released-baseline diff, one-command gate (v0.8.0)
+callsites: TypeScript/JavaScript support (v0.8.1)
 
-- run.py issues: lists open issues with linked PRs and marks the unclaimed ones
-  (no cross-reference, no assignee, no comments). Checked on headroom (23 bug issues,
-  all claimed) and instructor (0 open bug issues).
-- run.py diff --pip-version/--pip-package: installs the released baseline into a cached
-  temp venv and diffs the scenario against it. Instructor 1.17.0 vs fixed source: 2/3
-  inputs differ (data_present false -> true, or a clear ValueError).
-- run.py gate: reads claims, probe verdicts, verification and collision, and exits 0 only
-  when nothing blocks. Confirmed PASS on the instructor run with one merged-candidate warning.
+Name-based scan for definitions and calls in .ts/.tsx/.js/.jsx/.mjs/.cjs. Parameter
+wiring remains Python-only because it needs an AST; the TS scanner says so in its output.
+Verified on a two-file fixture: 1 definition, 2 call sites.

@@ -1,0 +1,20 @@
+{
+  "function": "parseImage",
+  "language": "ts",
+  "definitions": [
+    {
+      "file": "mod.ts",
+      "line": 1
+    }
+  ],
+  "calls": [
+    {
+      "file": "user.ts",
+      "line": 4
+    },
+    {
+      "file": "user.ts",
+      "line": 5
+    }
+  ]
+}

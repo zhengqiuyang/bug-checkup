@@ -964,6 +964,53 @@ def cmd_gate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _ts_callsites(args: argparse.Namespace, root: Path) -> int:
+    """Best-effort TS/JS call-site scan: definitions and calls by name, no parameter wiring.
+
+    A regex cannot see TypeScript's type system, so this deliberately stops at "where is it
+    defined and where is it called"; the Python scanner gets the deeper unwired-option check.
+    """
+    name = re.escape(args.function)
+    definition = re.compile(
+        rf"(?:export\s+)?(?:async\s+)?function\s+{name}\s*\(|"
+        rf"(?:const|let|var)\s+{name}\s*=\s*(?:async\s*)?\("
+    )
+    call = re.compile(rf"(?<![\w.]){name}\s*\(")
+    patterns = ("*.ts", "*.tsx", "*.js", "*.jsx", "*.mjs", "*.cjs")
+    files = sorted({path for pattern in patterns for path in root.rglob(pattern)})
+    definitions, calls = [], []
+    for file in files:
+        if "node_modules" in file.parts:
+            continue
+        try:
+            lines = file.read_text(encoding="utf-8", errors="replace").splitlines()
+        except OSError:
+            continue
+        for number, line in enumerate(lines, start=1):
+            if definition.search(line):
+                definitions.append({"file": str(file.relative_to(root)), "line": number})
+                continue
+            if call.search(line):
+                calls.append({"file": str(file.relative_to(root)), "line": number})
+    out = run_dir(args.name)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "callsites-results.json").write_text(
+        json.dumps(
+            {"function": args.function, "language": args.lang, "definitions": definitions, "calls": calls},
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(f"{args.function}: {len(calls)} call site(s), {len(definitions)} definition(s) [{args.lang}, regex]")
+    for row in definitions:
+        print(f"  def  {row['file']}:{row['line']}")
+    for row in calls:
+        print(f"  call {row['file']}:{row['line']}")
+    print("note: TS/JS scan is name-based; parameter wiring is only checked for Python")
+    return 0
+
+
 
 def cmd_callsites(args: argparse.Namespace) -> int:
     """Report every production call site of a function and the options it never passes.
@@ -976,6 +1023,8 @@ def cmd_callsites(args: argparse.Namespace) -> int:
     if not root.is_dir():
         print(f"{root} is not a directory", file=sys.stderr)
         return 2
+    if args.lang in {"ts", "js", "tsx", "jsx"}:
+        return _ts_callsites(args, root)
     files = [
         file
         for file in sorted(root.rglob("*.py"))
@@ -1163,6 +1212,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_call.add_argument("name")
     p_call.add_argument("--path", required=True, help="tree to scan")
     p_call.add_argument("--function", required=True)
+    p_call.add_argument("--lang", default="python", help="python (AST) or ts/js (regex)")
     p_call.set_defaults(func=cmd_callsites)
 
     p_auto = sub.add_parser("autoprobe", help="scaffold round-trip probes for inverse function pairs")

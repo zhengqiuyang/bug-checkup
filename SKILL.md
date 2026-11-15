@@ -161,3 +161,7 @@ manual setup.
 `python run.py gate <run> [--require-verification] [--require-collision]` reads every artifact
 (claims, probe verdicts, verification, collision) and exits 0 only when nothing blocks. This is the
 single command to run before presenting a finding or opening a PR.
+
+
+`run.py callsites ... --lang ts|js` does a name-based scan for TypeScript/JavaScript (definitions
+and calls only). Parameter-wiring detection is Python-only, because it needs an AST.

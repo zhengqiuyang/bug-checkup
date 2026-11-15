@@ -115,3 +115,10 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
   the fixed source: 2 of 3 inputs differ (`data_present: false` -> `true` / clear `ValueError`).
 - `run.py gate`: one command that reads claims, probe verdicts, verification and collision and exits
   0 only when nothing blocks. Confirmed on the instructor run: PASS with one merged-candidate warning.
+
+
+## [0.8.1] - 2026-11-15
+
+- `run.py callsites --lang ts|js`: name-based definition/call-site scan for TypeScript and
+  JavaScript (no parameter-wiring check — that stays Python-only). Verified on a two-file fixture:
+  1 definition, 2 call sites.
