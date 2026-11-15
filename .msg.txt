@@ -1,5 +1,15 @@
-callsites: TypeScript/JavaScript support (v0.8.1)
+shrink: delta debugging for failing inputs (v0.9.0)
 
-Name-based scan for definitions and calls in .ts/.tsx/.js/.jsx/.mjs/.cjs. Parameter
-wiring remains Python-only because it needs an AST; the TS scanner says so in its output.
-Verified on a two-file fixture: 1 definition, 2 call sites.
+run.py shrink minimizes a failing JSON input down to the smallest value that still
+reproduces. The probe protocol is one env var (BUGCHECKUP_INPUT) and exit code 1; every
+other outcome rejects the candidate, so a different failure cannot be kept.
+
+Candidates drop keys/list items in halves, unwrap single-element containers, truncate
+strings and zero numbers. Writes shrunk/<probe>.min.json and shrink-results.json.
+
+Exercised twice:
+- synthetic fixture: 263 -> 14 bytes ({"boom": true})
+- real instructor failure: 360 -> 32 bytes ({"source": "", "media_type": ""}), which
+  shows the defect is "any image without data", not just data URIs.
+
+selftest.py covers the shrinker.

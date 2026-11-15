@@ -56,7 +56,7 @@ never invent a different shape.
 | 2 probe | `probes/`, `probe-results.json` | **implemented** (`run.py probe`, `run.py new-probe`, `run.py autoprobe`, `run.py baseline`) |
 | 3 diff | `diff-results.json` | **implemented** (`run.py diff`, two environments or `--pip-version`) |
 | 3 examples | `examples-results.json` | **implemented** (`run.py examples`) |
-| 3 shrink | `candidates.json` | interface frozen, implementation pending |
+| 3 shrink | `shrunk/`, `shrink-results.json` | **implemented** (`run.py shrink`, delta debugging) |
 | 4 trace | `findings.json` | interface frozen, implementation pending |
 | 5 verify | `verification.json` | **implemented** (`run.py verify`: baseline vs after, red-to-green delta) |
 | 6 report | `REPORT.md`, `issue.md`, `pr.md` | templates fixed |

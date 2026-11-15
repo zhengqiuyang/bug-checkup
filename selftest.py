@@ -9,6 +9,7 @@ Runs without pytest (same discipline as the probes): exit 0 PASS, 1 FAIL.
 from __future__ import annotations
 
 import importlib.util
+import json
 import tempfile
 from pathlib import Path
 
@@ -90,6 +91,26 @@ def check_verify_delta(failures: list[str]) -> None:
         failures.append(f"verify did not flag a regression: {broken}")
 
 
+def check_shrinker(failures: list[str]) -> None:
+    import shrinker
+
+    def has_boom(node):
+        if isinstance(node, dict):
+            if node.get("boom") is True:
+                return True
+            return any(has_boom(item) for item in node.values())
+        if isinstance(node, list):
+            return any(has_boom(item) for item in node)
+        return False
+
+    value = {"meta": {"tags": ["a", "b"]}, "rows": [{"x": 1}, {"y": {"boom": True, "noise": "z"}}], "tail": "text"}
+    minimal, runs, accepted = shrinker.shrink(has_boom, value, max_runs=200)
+    if minimal != {"boom": True}:
+        failures.append(f"shrinker did not reach the minimal failing value: {minimal!r}")
+    if runs == 0 or not accepted:
+        failures.append("shrinker reported no candidate runs for a reducible input")
+
+
 def main() -> int:
     failures: list[str] = []
     for check in (
@@ -97,6 +118,7 @@ def main() -> int:
         check_examples_are_stripped,
         check_package_init_reachability,
         check_verify_delta,
+        check_shrinker,
     ):
         try:
             check(failures)
@@ -107,7 +129,7 @@ def main() -> int:
         for failure in failures:
             print(" -", failure)
         return 1
-    print("PASS: claim families, example stripping, package reachability, verify delta")
+    print("PASS: claim families, example stripping, package reachability, verify delta, shrinker")
     return 0
 
 

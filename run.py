@@ -1011,6 +1011,90 @@ def _ts_callsites(args: argparse.Namespace, root: Path) -> int:
     return 0
 
 
+def cmd_shrink(args: argparse.Namespace) -> int:
+    """Minimize a failing JSON input by delta debugging.
+
+    The probe protocol is one env var: ``BUGCHECKUP_INPUT`` holds the path to a candidate JSON
+    file, exit code 1 means "still reproduces". Every other outcome (0, crash, timeout) rejects
+    the candidate, so the shrinker cannot keep a different failure by accident.
+    """
+    sys.path.insert(0, str(HERE))
+    from shrinker import shrink  # noqa: PLC0415
+
+    script = Path(args.script).resolve()
+    input_path = Path(args.input).resolve()
+    if not script.exists():
+        print(f"script not found: {script}", file=sys.stderr)
+        return 2
+    if not input_path.exists():
+        print(f"input not found: {input_path}", file=sys.stderr)
+        return 2
+    try:
+        original = json.loads(input_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        print(f"input must be JSON for shrinking: {exc}", file=sys.stderr)
+        return 2
+
+    path = run_dir(args.name)
+    out_dir = path / "shrunk"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    candidate_file = out_dir / "candidate.json"
+    python = args.python or sys.executable
+    cwd = Path(args.cwd).resolve() if args.cwd else path
+    env = dict(os.environ)
+    for pair in args.env or []:
+        key, _, value = pair.partition("=")
+        env[key] = value
+    runs: list[int] = [0]
+
+    def predicate(value: object) -> bool:
+        candidate_file.write_text(
+            json.dumps(value, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        runs[0] += 1
+        run_env = {**env, "BUGCHECKUP_INPUT": str(candidate_file)}
+        try:
+            completed = subprocess.run(
+                [python, str(script)],
+                cwd=str(cwd),
+                env=run_env,
+                capture_output=True,
+                text=True,
+                timeout=args.timeout,
+            )
+        except subprocess.TimeoutExpired:
+            return False
+        return completed.returncode == 1
+
+    minimal, tried, accepted = shrink(predicate, original, max_runs=args.max_runs)
+    confirmed = predicate(minimal)
+    minimal_file = out_dir / f"{script.stem}.min.json"
+    minimal_file.write_text(
+        json.dumps(minimal, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    original_bytes = len(json.dumps(original, ensure_ascii=False))
+    minimal_bytes = len(json.dumps(minimal, ensure_ascii=False))
+    record = {
+        "script": str(script),
+        "input": str(input_path),
+        "minimal": str(minimal_file),
+        "original_bytes": original_bytes,
+        "minimal_bytes": minimal_bytes,
+        "candidates_tried": tried,
+        "accepted_steps": accepted,
+        "confirmed": confirmed,
+    }
+    (path / "shrink-results.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    print(f"shrunk {original_bytes} -> {minimal_bytes} bytes in {tried} candidate runs")
+    print(f"accepted steps: {accepted or ['(none; input was already minimal)']}")
+    print(f"minimal: {minimal_file}")
+    print(json.dumps(minimal, ensure_ascii=False, indent=2)[:2000])
+    if not confirmed:
+        print("FAIL: the minimal input no longer reproduces; the shrink was unsound", file=sys.stderr)
+        return 1
+    return 0
+
+
 
 def cmd_callsites(args: argparse.Namespace) -> int:
     """Report every production call site of a function and the options it never passes.
@@ -1151,6 +1235,17 @@ def build_parser() -> argparse.ArgumentParser:
     p_gate.add_argument("--require-collision", action="store_true")
     p_gate.set_defaults(func=cmd_gate)
 
+    p_shrink = sub.add_parser("shrink", help="minimize a failing JSON input (delta debugging)")
+    p_shrink.add_argument("name")
+    p_shrink.add_argument("--script", required=True, help="probe that reads BUGCHECKUP_INPUT")
+    p_shrink.add_argument("--input", required=True, help="failing JSON input")
+    p_shrink.add_argument("--python")
+    p_shrink.add_argument("--cwd")
+    p_shrink.add_argument("--timeout", type=int, default=120)
+    p_shrink.add_argument("--max-runs", type=int, default=300)
+    p_shrink.add_argument("--env", action="append", metavar="KEY=VALUE")
+    p_shrink.set_defaults(func=cmd_shrink)
+
     p_probe = sub.add_parser("probe", help="phase 2: run every probe and record verdicts")
     p_probe.add_argument("name")
     p_probe.add_argument("--python", help="interpreter that can import the audited repo")
@@ -1239,7 +1334,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_new.add_argument("--out")
     p_new.set_defaults(func=cmd_new_probe)
 
-    for phase in ("shrink", "report"):
+    for phase in ("report",):
         p = sub.add_parser(phase, help=f"phase: {phase}")
         p.add_argument("name")
         p.set_defaults(func=lambda _a, _p=phase: cmd_pending(_p))

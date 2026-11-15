@@ -165,3 +165,15 @@ single command to run before presenting a finding or opening a PR.
 
 `run.py callsites ... --lang ts|js` does a name-based scan for TypeScript/JavaScript (definitions
 and calls only). Parameter-wiring detection is Python-only, because it needs an AST.
+
+
+## Shrinking a failing input
+
+`python run.py shrink <run> --script <probe> --input <failing.json> ...` delta-debugs a JSON input
+down to the smallest value that still reproduces. The probe reads the candidate from the
+`BUGCHECKUP_INPUT` environment variable and exits 1 to mean "still fails"; every other outcome
+rejects the candidate, so a different failure cannot be kept. Writes `shrunk/<probe>.min.json` and
+`shrink-results.json` (bytes before/after, candidates tried, accepted steps).
+
+The minimum is chosen by "still reproduces", not by realism: empty strings and unwrapped containers
+can win. Use the reduced value as the mechanism proof and pick a realistic variant for the issue.

@@ -1,0 +1,20 @@
+{
+  "script": "D:\\projects\\bug-checkup\\examples\\shrink_demo\\probe.py",
+  "input": "D:\\projects\\bug-checkup\\examples\\shrink_demo\\input.json",
+  "minimal": "D:\\projects\\bug-checkup\\runs\\demo\\shrunk\\probe.min.json",
+  "original_bytes": 263,
+  "minimal_bytes": 14,
+  "candidates_tried": 26,
+  "accepted_steps": [
+    "drop half the keys",
+    "drop key 'footer'",
+    "records.keep second half",
+    "records.keep second half",
+    "records.[0].drop half the keys",
+    "records.[0].payload.drop key 'noise'",
+    "records.[0].unwrap single-key object",
+    "records.unwrap single-item list",
+    "unwrap single-key object"
+  ],
+  "confirmed": true
+}

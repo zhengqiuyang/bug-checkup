@@ -1,0 +1,5 @@
+{"meta": {"project": "demo", "version": 3, "tags": ["a", "b", "c"]},
+ "records": [{"id": 1, "name": "alpha", "note": "long text here"},
+             {"id": 2, "name": "beta", "extra": {"nested": [1, 2, 3]}},
+             {"id": 3, "payload": {"boom": true, "noise": "x"}}],
+ "footer": "end"}

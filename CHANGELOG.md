@@ -122,3 +122,15 @@ Seven probes on headroom, zero findings — the repo is unusually well defended 
 - `run.py callsites --lang ts|js`: name-based definition/call-site scan for TypeScript and
   JavaScript (no parameter-wiring check — that stays Python-only). Verified on a two-file fixture:
   1 definition, 2 call sites.
+
+
+## [0.9.0] - 2026-11-15
+
+- `run.py shrink` + `shrinker.py`: delta debugging for failing JSON inputs. Candidates drop
+  keys/list items in halves, unwrap single-element containers, truncate strings and zero numbers;
+  a candidate is kept only when the probe still exits 1. Writes `shrunk/<probe>.min.json` and
+  `shrink-results.json`.
+- Exercised twice: synthetic fixture 263 -> 14 bytes (`{"boom": true}`), and the real instructor
+  failure 360 -> 32 bytes (`{"source": "", "media_type": ""}`) — the reduced case shows the defect
+  is "any image without data", not just data URIs.
+- `selftest.py` now covers the shrinker too.

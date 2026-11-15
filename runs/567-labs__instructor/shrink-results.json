@@ -1,0 +1,17 @@
+{
+  "script": "D:\\projects\\bug-checkup\\runs\\567-labs__instructor\\probes\\shrinkable_image_data.py",
+  "input": "D:\\projects\\bug-checkup\\runs\\567-labs__instructor\\scenarios\\failing_image_input.json",
+  "minimal": "D:\\projects\\bug-checkup\\runs\\567-labs__instructor\\shrunk\\shrinkable_image_data.min.json",
+  "original_bytes": 360,
+  "minimal_bytes": 32,
+  "candidates_tried": 21,
+  "accepted_steps": [
+    "drop key 'data'",
+    "drop key 'request_id'",
+    "drop key 'metadata'",
+    "drop key 'options'",
+    "source.empty string",
+    "media_type.empty string"
+  ],
+  "confirmed": true
+}

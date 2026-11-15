@@ -1,0 +1,19 @@
+{
+  "source": "data:image/png;base64,iVBORw0KGgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "media_type": "image/png",
+  "data": null,
+  "request_id": "req-8f3a-2b1c",
+  "metadata": {
+    "trace_id": "0123456789abcdef",
+    "tags": [
+      "vision",
+      "prod"
+    ],
+    "retries": 2
+  },
+  "options": {
+    "strict": true,
+    "timeout_seconds": 30,
+    "cache": false
+  }
+}
